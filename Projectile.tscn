@@ -16,3 +16,5 @@ texture = ExtResource("2_qnl5r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xthn4")
+
+[node name="LifetimeTimer" type="Timer" parent="."]
