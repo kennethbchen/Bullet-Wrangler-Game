@@ -1,16 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://ie7hduoarf56"]
+[gd_scene load_steps=9 format=3 uid="uid://ie7hduoarf56"]
 
-[ext_resource type="Texture2D" uid="uid://cxwd3uqp0o3c8" path="res://icon.svg" id="1_o83d6"]
 [ext_resource type="Script" path="res://Player.gd" id="1_wdyi3"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Player.png" id="2_acqnw"]
 [ext_resource type="Script" path="res://LineDrawer.gd" id="2_v1nln"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://PlayerHurtbox.png" id="4_wikeh"]
+[ext_resource type="Script" path="res://Projectile.gd" id="5_fnrug"]
+[ext_resource type="Texture2D" uid="uid://dsgbymufdcx1a" path="res://Projectile.png" id="5_lr14q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xthn4"]
-radius = 6.0
+radius = 4.0
 
 [node name="Game" type="Node2D"]
 
@@ -45,10 +46,12 @@ shape = SubResource("CircleShape2D_njttx")
 
 [node name="Projectile" type="Area2D" parent="."]
 position = Vector2(128, 64)
+script = ExtResource("5_fnrug")
+speed = 40
 
 [node name="Sprite" type="Sprite2D" parent="Projectile"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_o83d6")
+position = Vector2(-2, 0)
+texture = ExtResource("5_lr14q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
 shape = SubResource("CircleShape2D_xthn4")
