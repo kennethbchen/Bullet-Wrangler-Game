@@ -34,6 +34,4 @@ func _on_delay_timer_timeout():
 		spawn_point_parent.position = even_offset
 	else:
 		spawn_point_parent.position = Vector2.ZERO
-		
-	print(spawn_point_parent.position)
 	

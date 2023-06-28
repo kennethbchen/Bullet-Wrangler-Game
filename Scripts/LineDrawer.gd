@@ -21,7 +21,7 @@ var last_point: Vector2:
 	get:
 		return points[points.size() - 1]
 		
-signal loop_created(points)
+signal loop_created(line_drawer, points)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -44,7 +44,7 @@ func _process(delta):
 			_append_point()
 			
 	if _is_loop():
-		loop_created.emit(points)
+		loop_created.emit(self, points)
 
 
 func _append_point():

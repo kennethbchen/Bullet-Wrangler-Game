@@ -29,4 +29,7 @@ func _process(delta):
 	position += input_dir * speed * delta
 
 func _on_area_entered(area: Area2D):
-	print(area)
+	if area is Projectile:
+		print("ouch")
+		
+

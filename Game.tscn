@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbm0wungyl62c"]
+[gd_scene load_steps=10 format=3 uid="uid://dbm0wungyl62c"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
+[ext_resource type="Script" path="res://PolygonGenerator.gd" id="2_bf4rk"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_6w3up"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="6_ykelv"]
+[ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
@@ -15,6 +17,10 @@ radius = 3.0
 [node name="Player" type="Area2D" parent="."]
 position = Vector2(128, 128)
 script = ExtResource("1_wwex1")
+
+[node name="PolygonGenerator" type="Node" parent="Player"]
+script = ExtResource("2_bf4rk")
+polygon_scene = ExtResource("7_rq6yi")
 
 [node name="LineDrawer" type="Line2D" parent="Player"]
 top_level = true
@@ -93,4 +99,5 @@ position = Vector2(144, 16)
 rotation = 1.5708
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
+[connection signal="loop_created" from="Player/LineDrawer" to="Player/PolygonGenerator" method="_on_loop_created"]
 [connection signal="timeout" from="ProjectileGenerator/DelayTimer" to="ProjectileGenerator" method="_on_delay_timer_timeout"]
