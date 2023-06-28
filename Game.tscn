@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://ie7hduoarf56"]
+
+[ext_resource type="Texture2D" uid="uid://cxwd3uqp0o3c8" path="res://icon.svg" id="1_o83d6"]
+[ext_resource type="Script" path="res://Player.gd" id="1_wdyi3"]
+[ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Player.png" id="2_acqnw"]
+[ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Hurtbox.png" id="3_vpq5p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xthn4"]
+radius = 6.0
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(128, 128)
+script = ExtResource("1_wdyi3")
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_acqnw")
+
+[node name="Hurtbox" type="Sprite2D" parent="Player"]
+z_index = 1
+position = Vector2(0, 3)
+texture = ExtResource("3_vpq5p")
+
+[node name="Hitbox" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_njttx")
+
+[node name="Projectile" type="Area2D" parent="."]
+position = Vector2(128, 64)
+
+[node name="Sprite" type="Sprite2D" parent="Projectile"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_o83d6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
+shape = SubResource("CircleShape2D_xthn4")
+
+[connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
