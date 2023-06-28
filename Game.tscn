@@ -20,12 +20,12 @@ script = ExtResource("1_wdyi3")
 [node name="Sprite" type="Sprite2D" parent="Player"]
 texture = ExtResource("2_acqnw")
 
-[node name="Hurtbox" type="Sprite2D" parent="Player"]
+[node name="HurtboxSprite" type="Sprite2D" parent="Player"]
 z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("3_vpq5p")
 
-[node name="Hitbox" type="CollisionShape2D" parent="Player"]
+[node name="Hurtbox" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_njttx")
 
