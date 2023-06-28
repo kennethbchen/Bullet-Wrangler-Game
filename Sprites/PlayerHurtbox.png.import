@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsgbymufdcx1a"
-path="res://.godot/imported/Projectile.png-8e2adf4a839150fd2431d49deb2cbf16.ctex"
+uid="uid://bmws0v53bodpa"
+path="res://.godot/imported/PlayerHurtbox.png-848e231b32313b9cdb671230824f10a7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Projectile.png"
-dest_files=["res://.godot/imported/Projectile.png-8e2adf4a839150fd2431d49deb2cbf16.ctex"]
+source_file="res://Sprites/PlayerHurtbox.png"
+dest_files=["res://.godot/imported/PlayerHurtbox.png-848e231b32313b9cdb671230824f10a7.ctex"]
 
 [params]
 

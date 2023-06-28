@@ -1,23 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://ie7hduoarf56"]
+[gd_scene load_steps=7 format=3 uid="uid://dbm0wungyl62c"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_wdyi3"]
-[ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Player.png" id="2_acqnw"]
-[ext_resource type="Script" path="res://LineDrawer.gd" id="2_v1nln"]
-[ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://PlayerHurtbox.png" id="4_wikeh"]
-[ext_resource type="Script" path="res://Projectile.gd" id="5_fnrug"]
-[ext_resource type="Texture2D" uid="uid://dsgbymufdcx1a" path="res://Projectile.png" id="5_lr14q"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
+[ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
+[ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
+[ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
+[ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_6w3up"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_xthn4"]
-radius = 4.0
 
 [node name="Game" type="Node2D"]
 
 [node name="Player" type="Area2D" parent="."]
 position = Vector2(128, 128)
-script = ExtResource("1_wdyi3")
+script = ExtResource("1_wwex1")
 
 [node name="LineDrawer" type="Line2D" parent="Player"]
 top_level = true
@@ -28,32 +24,23 @@ default_color = Color(0.564706, 0.952941, 0.976471, 1)
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
-script = ExtResource("2_v1nln")
+script = ExtResource("2_nfbc4")
 max_points = 25
 min_distance = 6.0
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
-texture = ExtResource("2_acqnw")
+texture = ExtResource("3_8cno4")
 
 [node name="HurtboxSprite" type="Sprite2D" parent="Player"]
 z_index = 1
 position = Vector2(0, 3)
-texture = ExtResource("4_wikeh")
+texture = ExtResource("4_7p6tv")
 
 [node name="Hurtbox" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_njttx")
 
-[node name="Projectile" type="Area2D" parent="."]
+[node name="Projectile" parent="." instance=ExtResource("5_6w3up")]
 position = Vector2(128, 64)
-script = ExtResource("5_fnrug")
-speed = 40
-
-[node name="Sprite" type="Sprite2D" parent="Projectile"]
-position = Vector2(-2, 0)
-texture = ExtResource("5_lr14q")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
-shape = SubResource("CircleShape2D_xthn4")
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
