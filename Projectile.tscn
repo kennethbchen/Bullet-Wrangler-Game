@@ -8,8 +8,6 @@ radius = 4.0
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_r7twk")
-speed = 40
-lifespan = 8
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-2, 0)

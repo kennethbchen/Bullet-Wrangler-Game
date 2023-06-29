@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=16 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
@@ -10,9 +10,47 @@
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_6w3up"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="6_ykelv"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
+[ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="10_ysd5r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
+
+[sub_resource type="Resource" id="Resource_quuhi"]
+script = ExtResource("10_ysd5r")
+skip = true
+spawn_position_parent_path = NodePath("Radial")
+projectile_scene = ExtResource("5_6w3up")
+position_offset = Vector2(0, 0)
+rotation_offset_degrees = -16.2
+spawn_delay = 0.0
+transition_delay = 0.04
+spawn_cycles = 1
+step_cycles = 96
+metadata/_editor_prop_ptr_spawn_position_parent = NodePath("SpawnPoints")
+
+[sub_resource type="Resource" id="Resource_w11ci"]
+script = ExtResource("10_ysd5r")
+skip = false
+spawn_position_parent_path = NodePath("Brick")
+projectile_scene = ExtResource("5_6w3up")
+position_offset = Vector2(8, 0)
+rotation_offset_degrees = 0.0
+spawn_delay = 0.0
+transition_delay = 0.75
+spawn_cycles = 1
+step_cycles = 1
+
+[sub_resource type="Resource" id="Resource_bjoa0"]
+script = ExtResource("10_ysd5r")
+skip = false
+spawn_position_parent_path = NodePath("Brick")
+projectile_scene = ExtResource("5_6w3up")
+position_offset = Vector2(-8, 0)
+rotation_offset_degrees = 0.0
+spawn_delay = 0.0
+transition_delay = 0.75
+spawn_cycles = 1
+step_cycles = 1
 
 [node name="Game" type="Node2D"]
 
@@ -57,57 +95,76 @@ position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_njttx")
 
 [node name="ProjectileGenerator" type="Node2D" parent="."]
-position = Vector2(128, -32)
+position = Vector2(128, 48)
 script = ExtResource("6_ykelv")
-projectile_scene = ExtResource("5_6w3up")
-even_offset = Vector2(16, 0)
+run_forever = true
+steps = Array[ExtResource("10_ysd5r")]([SubResource("Resource_quuhi"), SubResource("Resource_w11ci"), SubResource("Resource_bjoa0")])
 
-[node name="DelayTimer" type="Timer" parent="ProjectileGenerator"]
-autostart = true
+[node name="Radial" type="Node2D" parent="ProjectileGenerator"]
+visible = false
 
-[node name="SpawnPoints" type="Node2D" parent="ProjectileGenerator"]
-
-[node name="1" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(-144, 16)
+[node name="Marker2D" type="Marker2D" parent="ProjectileGenerator/Radial"]
+position = Vector2(0, 8)
 rotation = 1.5708
 
-[node name="2" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(-112, 16)
+[node name="Marker2D2" type="Marker2D" parent="ProjectileGenerator/Radial"]
+position = Vector2(0, -8)
+rotation = -1.5708
+
+[node name="Brick" type="Node2D" parent="ProjectileGenerator"]
+
+[node name="1" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-144, 8.00003)
 rotation = 1.5708
 
-[node name="3" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(-80, 16)
+[node name="2" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-120, 8.00003)
 rotation = 1.5708
 
-[node name="4" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(-47.9999, 16.0001)
+[node name="3" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-96, 8.00003)
 rotation = 1.5708
 
-[node name="5" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(-15.9999, 16.0001)
+[node name="4" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-71.9999, 8.00008)
 rotation = 1.5708
 
-[node name="6" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(16.0001, 16.0001)
+[node name="5" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-47.9999, 8.00008)
 rotation = 1.5708
 
-[node name="7" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(48.0001, 16.0001)
+[node name="6" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(-23.9999, 8.00006)
 rotation = 1.5708
 
-[node name="8" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(80.0001, 16.0001)
+[node name="7" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(6.10352e-05, 8.00006)
 rotation = 1.5708
 
-[node name="9" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(112, 16.0001)
+[node name="8" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(24.0001, 8.00008)
 rotation = 1.5708
 
-[node name="10" type="Marker2D" parent="ProjectileGenerator/SpawnPoints"]
-position = Vector2(144, 16)
+[node name="9" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(48.0001, 8.00006)
+rotation = 1.5708
+
+[node name="10" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(72.0001, 8.00009)
+rotation = 1.5708
+
+[node name="11" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(96.0001, 8.00009)
+rotation = 1.5708
+
+[node name="12" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(120, 8.00011)
+rotation = 1.5708
+
+[node name="13" type="Marker2D" parent="ProjectileGenerator/Brick"]
+position = Vector2(144, 8)
 rotation = 1.5708
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
 [connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
 [connection signal="loop_created" from="Player/AttackSystem/LineDrawer" to="Player/AttackSystem" method="_on_loop_created"]
-[connection signal="timeout" from="ProjectileGenerator/DelayTimer" to="ProjectileGenerator" method="_on_delay_timer_timeout"]

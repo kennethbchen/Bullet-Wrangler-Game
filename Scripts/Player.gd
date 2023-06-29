@@ -1,8 +1,8 @@
 extends Area2D
 
-@export var speed : float = 75
+@export var speed: float = 75
 
-@onready var health_system : HealthSystem = $HealthSystem
+@onready var health_system: HealthSystem = $HealthSystem
 @onready var attack_system = $AttackSystem
 
 var input_dir : Vector2
@@ -31,6 +31,8 @@ func _process(delta):
 	
 	if Input.is_action_pressed("Attack"):
 		attack_system.try_attack()
+	
+		
 	
 	position += input_dir * speed * delta
 

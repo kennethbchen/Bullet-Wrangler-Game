@@ -2,11 +2,11 @@ extends Node
 
 enum State {IDLE, CHARGED}
 
-@onready var line_drawer := $LineDrawer
-@onready var polygon_generator := $PolygonGenerator
+@onready var line_drawer: = $LineDrawer
+@onready var polygon_generator: = $PolygonGenerator
 
-var current_state : State = State.IDLE
-var current_polygon : PackedVector2Array
+var current_state: State = State.IDLE
+var current_polygon: PackedVector2Array
 
 func _ready():
 	assert(line_drawer != null)

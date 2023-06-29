@@ -2,7 +2,7 @@ extends Line2D
 
 @export var enabled: bool = true
 
-@export var tracked_node : Node2D
+@export var tracked_node: Node2D
 
 @export var max_points: int = 20
 

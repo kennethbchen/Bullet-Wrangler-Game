@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var lifespan = 0.5
+@export var lifespan: float = 0.5
 
 @onready var polygon_visuals: Polygon2D = $Polygon2D
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D

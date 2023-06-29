@@ -1,37 +1,54 @@
 extends Node2D
 
-@export var projectile_scene: PackedScene
+@export var run_forever = false
 
-@export var spawn_delay: float = 1
+@export var steps: Array[ProjectileGeneratorStep]
 
-@export var even_offset: Vector2
-
-@onready var spawn_point_parent: Node = $SpawnPoints
-
-@onready var delay_timer: Timer = $DelayTimer
-
+var running : bool = false
 
 func _ready():
-	assert(projectile_scene != null)
-	
-	delay_timer.wait_time = spawn_delay
-	delay_timer.start()
+	pass
+
 
 func _process(delta):
-	pass
 	
-func _on_delay_timer_timeout():
-	
-	for child in spawn_point_parent.get_children():
+	if Input.is_action_just_pressed("DebugSpawn"):
+		start()
 		
-		var new_projectile = projectile_scene.instantiate()
-		get_tree().root.add_child(new_projectile)
-		new_projectile.global_position = child.global_position
-		new_projectile.rotation = child.rotation
+	if run_forever and not running:
+		start()
+
+func start():
 	
+	if running: return
 	
-	if spawn_point_parent.position == Vector2.ZERO:
-		spawn_point_parent.position = even_offset
-	else:
-		spawn_point_parent.position = Vector2.ZERO
+	running = true
+	for step in steps:
+		
+		if step.skip:
+			continue
+		
+		var spawn_pos_parent = get_node(step.spawn_position_parent_path)
+		
+		for step_cycle in range(0, step.step_cycles):
+			
+			# Apply transform offsets
+			spawn_pos_parent.position += step.position_offset
+			spawn_pos_parent.rotation_degrees += step.rotation_offset_degrees
+			
+			for spawn_cycle in range(0, step.spawn_cycles):
+				
+				for spawn_point in spawn_pos_parent.get_children():
+					var new_projectile = step.projectile_scene.instantiate()
+					get_tree().root.add_child(new_projectile)
+					new_projectile.global_position = spawn_point.global_position
+					new_projectile.rotation = spawn_point.global_rotation
+				
+				await get_tree().create_timer(step.spawn_delay).timeout
+			
+			
+			
+			await get_tree().create_timer(step.transition_delay).timeout
+	
+	running = false
 	

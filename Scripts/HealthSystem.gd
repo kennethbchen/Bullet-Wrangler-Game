@@ -2,9 +2,9 @@ extends Node
 
 class_name HealthSystem
 
-@export var max_health : int = 3
+@export var max_health: int = 3
 
-var health : int = max_health
+var health: int = max_health
 
 signal health_changed(max_health, health)
 signal health_zeroed
@@ -12,7 +12,7 @@ signal health_zeroed
 func _ready():
 	health = max_health
 
-func change_health(delta : int):
+func change_health(delta: int):
 	
 	if delta == 0: return
 	
