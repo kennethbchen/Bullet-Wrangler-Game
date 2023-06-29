@@ -2,6 +2,8 @@ extends Area2D
 
 @export var speed: float = 75
 
+@onready var health_system: HealthSystem = $HealthSystem
+
 var input_dir: Vector2
 
 # Called when the node enters the scene tree for the first time.
@@ -30,6 +32,11 @@ func _process(delta):
 
 func _on_area_entered(area: Area2D):
 	if area is Projectile:
-		print("ouch")
-		
+		take_damage(-1)
+
+func take_damage(damage):
+	health_system.change_health(-abs(damage))
+	
+func _on_health_zeroed():
+	print("ded")
 

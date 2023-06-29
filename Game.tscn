@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbm0wungyl62c"]
+[gd_scene load_steps=11 format=3 uid="uid://dbm0wungyl62c"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
+[ext_resource type="Script" path="res://HealthSystem.gd" id="2_0a71w"]
 [ext_resource type="Script" path="res://PolygonGenerator.gd" id="2_bf4rk"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
@@ -17,6 +18,10 @@ radius = 3.0
 [node name="Player" type="Area2D" parent="."]
 position = Vector2(128, 128)
 script = ExtResource("1_wwex1")
+
+[node name="HealthSystem" type="Node" parent="Player"]
+script = ExtResource("2_0a71w")
+max_health = null
 
 [node name="PolygonGenerator" type="Node" parent="Player"]
 script = ExtResource("2_bf4rk")
@@ -99,5 +104,6 @@ position = Vector2(144, 16)
 rotation = 1.5708
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
+[connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
 [connection signal="loop_created" from="Player/LineDrawer" to="Player/PolygonGenerator" method="_on_loop_created"]
 [connection signal="timeout" from="ProjectileGenerator/DelayTimer" to="ProjectileGenerator" method="_on_delay_timer_timeout"]
