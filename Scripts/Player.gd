@@ -9,6 +9,7 @@ var input_dir : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	pass # Replace with function body.
 
 
@@ -32,12 +33,11 @@ func _process(delta):
 	if Input.is_action_pressed("Attack"):
 		attack_system.try_attack()
 	
-		
-	
 	position += input_dir * speed * delta
 
 func _on_area_entered(area : Area2D):
 	if area is Projectile:
+		print("ow")
 		take_damage(-1)
 
 func take_damage(damage: int):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=18 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
@@ -11,13 +11,14 @@
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="6_ykelv"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="10_ysd5r"]
+[ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="12_nsuc7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
 
 [sub_resource type="Resource" id="Resource_quuhi"]
 script = ExtResource("10_ysd5r")
-skip = true
+skip = false
 spawn_position_parent_path = NodePath("Radial")
 projectile_scene = ExtResource("5_6w3up")
 position_offset = Vector2(0, 0)
@@ -30,7 +31,7 @@ metadata/_editor_prop_ptr_spawn_position_parent = NodePath("SpawnPoints")
 
 [sub_resource type="Resource" id="Resource_w11ci"]
 script = ExtResource("10_ysd5r")
-skip = false
+skip = true
 spawn_position_parent_path = NodePath("Brick")
 projectile_scene = ExtResource("5_6w3up")
 position_offset = Vector2(8, 0)
@@ -42,7 +43,7 @@ step_cycles = 1
 
 [sub_resource type="Resource" id="Resource_bjoa0"]
 script = ExtResource("10_ysd5r")
-skip = false
+skip = true
 spawn_position_parent_path = NodePath("Brick")
 projectile_scene = ExtResource("5_6w3up")
 position_offset = Vector2(-8, 0)
@@ -51,6 +52,9 @@ spawn_delay = 0.0
 transition_delay = 0.75
 spawn_cycles = 1
 step_cycles = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
+radius = 7.0
 
 [node name="Game" type="Node2D"]
 
@@ -97,7 +101,6 @@ shape = SubResource("CircleShape2D_njttx")
 [node name="ProjectileGenerator" type="Node2D" parent="."]
 position = Vector2(128, 48)
 script = ExtResource("6_ykelv")
-run_forever = true
 steps = Array[ExtResource("10_ysd5r")]([SubResource("Resource_quuhi"), SubResource("Resource_w11ci"), SubResource("Resource_bjoa0")])
 
 [node name="Radial" type="Node2D" parent="ProjectileGenerator"]
@@ -164,6 +167,15 @@ rotation = 1.5708
 [node name="13" type="Marker2D" parent="ProjectileGenerator/Brick"]
 position = Vector2(144, 8)
 rotation = 1.5708
+
+[node name="Enemy" type="Area2D" parent="."]
+position = Vector2(128, 48)
+
+[node name="Sprite" type="Sprite2D" parent="Enemy"]
+texture = ExtResource("12_nsuc7")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("CircleShape2D_hhbvq")
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
 [connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
