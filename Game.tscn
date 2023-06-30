@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=18 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
@@ -12,48 +12,24 @@
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="Script" path="res://Scripts/AimSystem.gd" id="10_u7ckr"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="10_ysd5r"]
-[ext_resource type="Texture2D" uid="uid://cxwd3uqp0o3c8" path="res://icon.svg" id="11_dwx14"]
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="12_dhr3g"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="12_nsuc7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
 radius = 3.0
 
-[sub_resource type="Resource" id="Resource_quuhi"]
+[sub_resource type="Resource" id="Resource_s47om"]
 script = ExtResource("10_ysd5r")
 skip = false
-spawn_position_parent_path = NodePath("Radial")
+spawn_position_parent_path = NodePath("Aim")
 projectile_scene = ExtResource("5_6w3up")
+aim_rotation_source_path = NodePath("../AimSystem")
+aim_type = 1
 position_offset = Vector2(0, 0)
-rotation_offset_degrees = -16.2
-spawn_delay = 0.0
-transition_delay = 0.04
-spawn_cycles = 1
-step_cycles = 96
-metadata/_editor_prop_ptr_spawn_position_parent = NodePath("SpawnPoints")
-
-[sub_resource type="Resource" id="Resource_w11ci"]
-script = ExtResource("10_ysd5r")
-skip = true
-spawn_position_parent_path = NodePath("Brick")
-projectile_scene = ExtResource("5_6w3up")
-position_offset = Vector2(8, 0)
 rotation_offset_degrees = 0.0
-spawn_delay = 0.0
-transition_delay = 0.75
-spawn_cycles = 1
-step_cycles = 1
-
-[sub_resource type="Resource" id="Resource_bjoa0"]
-script = ExtResource("10_ysd5r")
-skip = true
-spawn_position_parent_path = NodePath("Brick")
-projectile_scene = ExtResource("5_6w3up")
-position_offset = Vector2(-8, 0)
-rotation_offset_degrees = 0.0
-spawn_delay = 0.0
-transition_delay = 0.75
-spawn_cycles = 1
+spawn_delay = 0.3
+transition_delay = 0.5
+spawn_cycles = 3
 step_cycles = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
@@ -105,86 +81,22 @@ position = Vector2(128, 48)
 script = ExtResource("12_dhr3g")
 target_node = NodePath("../Player")
 
+[node name="HealthSystem" parent="Enemy" instance=ExtResource("2_1fmnw")]
+max_health = 6
+
 [node name="AimSystem" type="Node2D" parent="Enemy" node_paths=PackedStringArray("aim_target")]
 script = ExtResource("10_u7ckr")
 aim_target = NodePath("../../Player")
 
-[node name="TempVisual" type="Sprite2D" parent="Enemy/AimSystem"]
-position = Vector2(16, 0)
-rotation = 1.5708
-scale = Vector2(0.103, 0.103)
-texture = ExtResource("11_dwx14")
-
 [node name="ProjectileGenerator" type="Node2D" parent="Enemy"]
 script = ExtResource("6_ykelv")
-steps = Array[ExtResource("10_ysd5r")]([SubResource("Resource_quuhi"), SubResource("Resource_w11ci"), SubResource("Resource_bjoa0")])
+run_forever = true
+steps = Array[ExtResource("10_ysd5r")]([SubResource("Resource_s47om")])
 
-[node name="Radial" type="Node2D" parent="Enemy/ProjectileGenerator"]
+[node name="Aim" type="Node2D" parent="Enemy/ProjectileGenerator"]
 
-[node name="Marker2D" type="Marker2D" parent="Enemy/ProjectileGenerator/Radial"]
-position = Vector2(0, 8)
-rotation = 1.5708
-
-[node name="Marker2D2" type="Marker2D" parent="Enemy/ProjectileGenerator/Radial"]
-position = Vector2(0, -8)
-rotation = -1.5708
-
-[node name="Brick" type="Node2D" parent="Enemy/ProjectileGenerator"]
-
-[node name="1" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-144, 8.00003)
-rotation = 1.5708
-
-[node name="2" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-120, 8.00003)
-rotation = 1.5708
-
-[node name="3" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-96, 8.00003)
-rotation = 1.5708
-
-[node name="4" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-71.9999, 8.00008)
-rotation = 1.5708
-
-[node name="5" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-47.9999, 8.00008)
-rotation = 1.5708
-
-[node name="6" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(-23.9999, 8.00006)
-rotation = 1.5708
-
-[node name="7" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(6.10352e-05, 8.00006)
-rotation = 1.5708
-
-[node name="8" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(24.0001, 8.00008)
-rotation = 1.5708
-
-[node name="9" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(48.0001, 8.00006)
-rotation = 1.5708
-
-[node name="10" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(72.0001, 8.00009)
-rotation = 1.5708
-
-[node name="11" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(96.0001, 8.00009)
-rotation = 1.5708
-
-[node name="12" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(120, 8.00011)
-rotation = 1.5708
-
-[node name="13" type="Marker2D" parent="Enemy/ProjectileGenerator/Brick"]
-position = Vector2(144, 8)
-rotation = 1.5708
-
-[node name="HealthSystem" parent="Enemy" instance=ExtResource("2_1fmnw")]
-max_health = 6
+[node name="Marker2D" type="Marker2D" parent="Enemy/ProjectileGenerator/Aim"]
+position = Vector2(8, 0)
 
 [node name="Sprite" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("12_nsuc7")

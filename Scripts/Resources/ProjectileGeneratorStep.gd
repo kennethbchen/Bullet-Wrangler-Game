@@ -2,13 +2,22 @@ extends Resource
 
 class_name ProjectileGeneratorStep
 
+enum AIM_TYPE {PER_STEP, PER_SPAWN}
+
 @export var skip: bool = false
+
 @export_group("Nodes")
 
 # Exporting NodePath instead of Node2D is a workaround because 
 # this resource is loaded before the spawn_positions, meaning they are incorrectly null at runtime
 @export var spawn_position_parent_path: NodePath
+
 @export var projectile_scene: PackedScene
+
+# Aiming and having rotation offsets at the same time probably don't work
+@export_group("Aiming")
+@export var aim_rotation_source_path: NodePath
+@export var aim_type: AIM_TYPE
 
 @export_group("Transform Offset")
 @export var position_offset: Vector2 = Vector2.ZERO
