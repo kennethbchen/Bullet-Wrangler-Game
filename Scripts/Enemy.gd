@@ -21,4 +21,4 @@ func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 
 func _on_health_zeroed():
-	print("enemy ded")
+	queue_free()

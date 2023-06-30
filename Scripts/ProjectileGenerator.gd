@@ -4,10 +4,12 @@ extends Node
 
 @export var steps: Array[ProjectileGeneratorStep]
 
+@onready var projectile_owner: Node2D
+
 var running : bool = false
 
 func _ready():
-	pass
+	projectile_owner = get_parent()
 
 
 func _process(delta):
@@ -46,6 +48,7 @@ func start():
 					get_tree().root.add_child(new_projectile)
 					new_projectile.global_position = spawn_point.global_position
 					new_projectile.rotation = spawn_point.global_rotation
+					new_projectile.init(projectile_owner)
 				
 				await get_tree().create_timer(step.spawn_delay).timeout
 			

@@ -5,7 +5,12 @@ extends Area2D
 @onready var polygon_visuals: Polygon2D = $Polygon2D
 @onready var collision_polygon: CollisionPolygon2D = $CollisionPolygon2D
 
-func init(points: PackedVector2Array):
+var loop_owner: Node2D
+
+func init(loop_owner: Node2D, points: PackedVector2Array):
+	
+	self.loop_owner = loop_owner
+	
 	polygon_visuals.polygon = points
 	collision_polygon.polygon = points
 	
@@ -21,4 +26,6 @@ func init(points: PackedVector2Array):
 func _on_area_entered(area: Area2D):
 	
 	if area is Projectile:
-		print(area)
+		
+		area.change_owner(loop_owner)
+		area.return_to_owner()

@@ -2,6 +2,8 @@ extends Node
 
 class_name HealthSystem
 
+@export var polygon_scene: PackedScene
+
 @export var max_health: int = 3
 
 var health: int = max_health

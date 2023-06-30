@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=17 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
-[ext_resource type="Script" path="res://Scripts/PolygonGenerator.gd" id="4_nders"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_6w3up"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="6_ykelv"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
@@ -45,6 +44,7 @@ script = ExtResource("1_wwex1")
 
 [node name="AttackSystem" type="Node" parent="Player"]
 script = ExtResource("2_2nppm")
+polygon_scene = ExtResource("7_rq6yi")
 
 [node name="LineDrawer" type="Line2D" parent="Player/AttackSystem" node_paths=PackedStringArray("tracked_node")]
 top_level = true
@@ -59,10 +59,6 @@ script = ExtResource("2_nfbc4")
 tracked_node = NodePath("../..")
 max_points = 25
 min_distance = 6.0
-
-[node name="PolygonGenerator" type="Node" parent="Player/AttackSystem"]
-script = ExtResource("4_nders")
-polygon_scene = ExtResource("7_rq6yi")
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
 texture = ExtResource("3_8cno4")

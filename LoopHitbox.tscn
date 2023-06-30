@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://Scripts/LoopHitbox.gd" id="1_u2wb5"]
 
 [node name="LoopHitbox" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_u2wb5")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
