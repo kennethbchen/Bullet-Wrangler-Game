@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Enemy
+
 @export var target_node: Node2D
 
 @onready var health_system = $HealthSystem

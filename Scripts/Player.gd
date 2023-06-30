@@ -36,7 +36,7 @@ func _process(delta):
 	position += input_dir * speed * delta
 
 func _on_area_entered(area : Area2D):
-	if area is Projectile:
+	if area is Projectile or area is Enemy:
 		print("ow")
 		take_damage(-1)
 
