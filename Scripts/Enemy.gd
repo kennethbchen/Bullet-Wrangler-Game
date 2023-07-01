@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 class_name Enemy
 
@@ -14,11 +14,19 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_area_entered(area : Area2D):
-	pass
-
 func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 
 func _on_health_zeroed():
 	queue_free()
+
+func _on_hurtbox_area_entered(area: Area2D):
+	
+	if area is Projectile:
+		
+		var proj = area as Projectile
+		
+		if proj.can_damage(self):
+			take_damage(1)
+			proj.queue_free()
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=23 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
@@ -14,8 +14,28 @@
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="12_dhr3g"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="12_nsuc7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_njttx"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7uytu"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mlu26"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rexeu"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y8ugp"]
+normal = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eq0el"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_puqmc"]
 radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfl4m"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
+radius = 7.0
 
 [sub_resource type="Resource" id="Resource_s47om"]
 script = ExtResource("10_ysd5r")
@@ -31,14 +51,45 @@ transition_delay = 0.5
 spawn_cycles = 3
 step_cycles = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
-radius = 7.0
-
 [node name="Game" type="Node2D"]
 
-[node name="Player" type="Area2D" parent="."]
+[node name="GameWalls" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="1" type="CollisionShape2D" parent="GameWalls"]
+position = Vector2(128, 256)
+shape = SubResource("WorldBoundaryShape2D_7uytu")
+
+[node name="2" type="CollisionShape2D" parent="GameWalls"]
+position = Vector2(256, 128)
+shape = SubResource("WorldBoundaryShape2D_mlu26")
+
+[node name="3" type="CollisionShape2D" parent="GameWalls"]
+position = Vector2(0, 128)
+shape = SubResource("WorldBoundaryShape2D_rexeu")
+
+[node name="4" type="CollisionShape2D" parent="GameWalls"]
+position = Vector2(128, 0)
+shape = SubResource("WorldBoundaryShape2D_y8ugp")
+
+[node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(128, 128)
+collision_layer = 0
+collision_mask = 4
 script = ExtResource("1_wwex1")
+
+[node name="Bounds" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_eq0el")
+
+[node name="Hurtbox" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 3
+metadata/Area2DType = "Hurtbox"
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Player/Hurtbox"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_puqmc")
 
 [node name="HealthSystem" parent="Player" instance=ExtResource("2_1fmnw")]
 
@@ -68,14 +119,20 @@ z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("4_7p6tv")
 
-[node name="Hurtbox" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 3)
-shape = SubResource("CircleShape2D_njttx")
-
-[node name="Enemy" type="Area2D" parent="." node_paths=PackedStringArray("target_node")]
+[node name="Enemy" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target_node")]
 position = Vector2(128, 48)
 script = ExtResource("12_dhr3g")
 target_node = NodePath("../Player")
+
+[node name="Bounds" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("CircleShape2D_bfl4m")
+
+[node name="Hurtbox" type="Area2D" parent="Enemy"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Enemy/Hurtbox"]
+shape = SubResource("CircleShape2D_hhbvq")
 
 [node name="HealthSystem" parent="Enemy" instance=ExtResource("2_1fmnw")]
 max_health = 6
@@ -97,10 +154,9 @@ position = Vector2(8, 0)
 [node name="Sprite" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("12_nsuc7")
 
-[node name="Hurtbox" type="CollisionShape2D" parent="Enemy"]
-shape = SubResource("CircleShape2D_hhbvq")
-
-[connection signal="area_entered" from="Player" to="Player" method="_on_area_entered"]
+[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
+[connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]
 [connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
 [connection signal="loop_created" from="Player/AttackSystem/LineDrawer" to="Player/AttackSystem" method="_on_loop_created"]
+[connection signal="area_entered" from="Enemy/Hurtbox" to="Enemy" method="_on_hurtbox_area_entered"]
 [connection signal="health_zeroed" from="Enemy/HealthSystem" to="Enemy" method="_on_health_zeroed"]

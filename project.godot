@@ -64,6 +64,7 @@ DebugSpawn={
 
 2d_physics/layer_1="Entities"
 2d_physics/layer_2="Attacks"
+2d_physics/layer_3="Walls"
 
 [rendering]
 

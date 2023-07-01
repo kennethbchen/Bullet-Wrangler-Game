@@ -57,11 +57,5 @@ func return_to_owner():
 		speed = speed + 80
 		)
 
-func _on_area_entered(area: Area2D):
-	
-	if area == current_owner:
-		return
-	
-	if area.has_method("take_damage"):
-		area.take_damage(1)
-		queue_free()
+func can_damage(node: Node2D) -> bool:
+	return node != current_owner

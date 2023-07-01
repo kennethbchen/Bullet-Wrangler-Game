@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 @export var speed: float = 75
 
@@ -33,16 +33,28 @@ func _process(delta):
 	if Input.is_action_pressed("Attack"):
 		attack_system.try_attack()
 	
-	position += input_dir * speed * delta
-
-func _on_area_entered(area : Area2D):
-	if area is Enemy:
-		take_damage(-1)
+func _physics_process(delta):
+	
+	velocity = input_dir * speed
+	move_and_slide()
 
 func take_damage(damage: int):
-	print("ow")
 	health_system.change_health(-abs(damage))
 	
 func _on_health_zeroed():
 	print("ded")
 
+func _on_hurtbox_area_entered(area: Area2D):
+	
+	if area is Projectile:
+		
+		var proj = area as Projectile
+	
+		if proj.can_damage(self):
+			take_damage(1)
+			proj.queue_free()
+			
+func _on_hurtbox_body_entered(body: Node2D):
+	
+	if body is Enemy:
+		take_damage(1)
