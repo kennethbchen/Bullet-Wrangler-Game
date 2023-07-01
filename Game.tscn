@@ -73,6 +73,20 @@ shape = SubResource("WorldBoundaryShape2D_rexeu")
 position = Vector2(128, 0)
 shape = SubResource("WorldBoundaryShape2D_y8ugp")
 
+[node name="EnemyPatrolPoints" type="Node" parent="."]
+
+[node name="1" type="Marker2D" parent="EnemyPatrolPoints"]
+position = Vector2(32, 64)
+
+[node name="2" type="Marker2D" parent="EnemyPatrolPoints"]
+position = Vector2(224, 64)
+
+[node name="3" type="Marker2D" parent="EnemyPatrolPoints"]
+position = Vector2(128, 48)
+
+[node name="4" type="Marker2D" parent="EnemyPatrolPoints"]
+position = Vector2(128, 80)
+
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(128, 128)
 collision_layer = 0
@@ -119,9 +133,11 @@ z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("4_7p6tv")
 
-[node name="Enemy" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target_node")]
+[node name="Enemy" type="CharacterBody2D" parent="." node_paths=PackedStringArray("patrol_point_parent", "target_node")]
 position = Vector2(128, 48)
+collision_mask = 4
 script = ExtResource("12_dhr3g")
+patrol_point_parent = NodePath("../EnemyPatrolPoints")
 target_node = NodePath("../Player")
 
 [node name="Bounds" type="CollisionShape2D" parent="Enemy"]
