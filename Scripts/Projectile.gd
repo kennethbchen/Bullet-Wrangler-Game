@@ -5,6 +5,7 @@ class_name Projectile
 enum State {IDLE, TRAVELLING, RETURNING}
 
 @export var speed: float = 60
+@export var return_speed: float = 210
 @export var lifespan: float = 5
 
 var current_state: State = State.TRAVELLING
@@ -47,14 +48,14 @@ func return_to_owner():
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "position", position + transform.x * 10, 0.3)
+	tween.tween_property(self, "position", position + transform.x * 20, 0.3)
 	tween.tween_callback(func(): 
-		
+	
 		if is_instance_valid(original_owner):
 			rotation = rotation + get_angle_to(original_owner.global_position)
 			
 		current_state = State.RETURNING
-		speed = speed + 80
+		speed = return_speed
 		)
 
 func can_damage(node: Node2D) -> bool:

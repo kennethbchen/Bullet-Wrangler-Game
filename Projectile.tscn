@@ -9,6 +9,7 @@ radius = 4.0
 [node name="Projectile" type="Area2D"]
 collision_layer = 2
 script = ExtResource("1_r7twk")
+speed = 100.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-2, 0)
