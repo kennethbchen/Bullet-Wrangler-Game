@@ -58,5 +58,5 @@ func _append_point():
 
 func _is_loop():
 	return points.size() > min_loop_point_count and \
-		first_point.distance_to(last_point) < min_distance
+		first_point.distance_to(last_point) < min_distance + 2
 		

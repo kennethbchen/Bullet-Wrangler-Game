@@ -56,9 +56,6 @@ func return_to_owner():
 		current_state = State.RETURNING
 		speed = speed + 80
 		)
-	
-	
-	
 
 func _on_area_entered(area: Area2D):
 	
