@@ -13,9 +13,18 @@ var current_state: State = State.TRAVELLING
 var original_owner: Node2D
 var current_owner: Node2D
 
+# Team system is gross workaround to make enemies not be able to hit each other
+enum TEAM {PLAYER, ENEMY}
+var current_team: TEAM = TEAM.ENEMY
+
 func init(owner: Node2D):
 	original_owner = owner
-	current_owner = owner
+	change_owner(owner)
+	
+	if owner is Enemy:
+		current_team = TEAM.ENEMY
+	elif owner is Player:
+		current_team = TEAM.PLAYER
 	
 	get_tree().create_timer(lifespan).timeout.connect(queue_free)
 
@@ -36,6 +45,13 @@ func _process(delta):
 
 func change_owner(new_owner: Node2D):
 	current_owner = new_owner
+	
+	if current_owner is Enemy:
+		current_team = TEAM.ENEMY
+	elif current_owner is Player:
+		current_team = TEAM.PLAYER
+		
+	
 
 func return_to_owner():
 	
@@ -59,4 +75,10 @@ func return_to_owner():
 		)
 
 func can_damage(node: Node2D) -> bool:
-	return node != current_owner
+	
+	if (node is Enemy and current_team == TEAM.ENEMY) \
+		or (node is Player and current_team == TEAM.PLAYER):
+		
+		return false
+	else: 
+		return node != current_owner

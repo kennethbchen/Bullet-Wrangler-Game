@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cfr724yc67i72"]
+[gd_scene load_steps=21 format=3 uid="uid://cfr724yc67i72"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -7,8 +7,10 @@
 [ext_resource type="Theme" uid="uid://b38ci0gydvl3p" path="res://Theme.tres" id="2_de36d"]
 [ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
+[ext_resource type="Script" path="res://Scripts/Stopwatch.gd" id="2_xnt2p"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
+[ext_resource type="Script" path="res://Scripts/EnemyOrchestrator.gd" id="6_fwqae"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="PackedScene" uid="uid://d2hpmn63vkd6g" path="res://Enemy.tscn" id="12_liglb"]
 [ext_resource type="Script" path="res://Scripts/TextureCounter.gd" id="14_mhgt6"]
@@ -30,6 +32,9 @@ radius = 3.0
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
+
+[node name="GameTimer" type="Node" parent="."]
+script = ExtResource("2_xnt2p")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
 visible = false
@@ -132,24 +137,36 @@ rotation = 3.14159
 shape = SubResource("WorldBoundaryShape2D_y8ugp")
 one_way_collision = true
 
-[node name="EnemyPatrolPoints" type="Node" parent="."]
-
-[node name="1" type="Marker2D" parent="EnemyPatrolPoints"]
-position = Vector2(32, 64)
-
-[node name="2" type="Marker2D" parent="EnemyPatrolPoints"]
-position = Vector2(224, 64)
-
-[node name="3" type="Marker2D" parent="EnemyPatrolPoints"]
-position = Vector2(128, 48)
-
-[node name="4" type="Marker2D" parent="EnemyPatrolPoints"]
-position = Vector2(128, 80)
-
 [node name="AttackParent" type="Node" parent="."]
 
+[node name="EnemyOrchestrator" type="Node" parent="." node_paths=PackedStringArray("game_timer", "enemy_target")]
+script = ExtResource("6_fwqae")
+game_timer = NodePath("../GameTimer")
+enemy_scene = ExtResource("12_liglb")
+enemy_target = NodePath("../Player")
+max_enemies = 2
+
+[node name="SpawnPoint" type="Marker2D" parent="EnemyOrchestrator"]
+position = Vector2(128, -56)
+
+[node name="PatrolPoints" type="Node" parent="EnemyOrchestrator"]
+
+[node name="1" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(32, 64)
+
+[node name="2" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(224, 64)
+
+[node name="3" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(128, 48)
+
+[node name="4" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(128, 80)
+
+[node name="Enemies" type="Node" parent="EnemyOrchestrator"]
+
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(128, 128)
+position = Vector2(128, 192)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_wwex1")
@@ -159,8 +176,7 @@ position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_eq0el")
 
 [node name="Hurtbox" type="Area2D" parent="Player"]
-collision_layer = 0
-collision_mask = 3
+collision_mask = 6
 metadata/Area2DType = "Hurtbox"
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Player/Hurtbox"]
@@ -194,10 +210,6 @@ texture = ExtResource("3_8cno4")
 z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("4_7p6tv")
-
-[node name="Enemy" parent="." node_paths=PackedStringArray("patrol_point_parent", "target_node") instance=ExtResource("12_liglb")]
-patrol_point_parent = NodePath("../EnemyPatrolPoints")
-target_node = NodePath("../Player")
 
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]

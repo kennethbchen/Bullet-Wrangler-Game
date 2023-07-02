@@ -2,11 +2,14 @@ extends Node2D
 
 @export var game_over_ui: CanvasLayer
 
+@onready var game_timer = $GameTimer
+
 var game_over: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	game_over_ui.hide()
+	game_timer.start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

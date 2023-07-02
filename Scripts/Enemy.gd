@@ -18,11 +18,13 @@ var rand: RandomNumberGenerator
 
 var current_patrol_target: Node2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func init(patrol_point_parent: Node, target_node: Node2D):
+	self.patrol_point_parent = patrol_point_parent
+	self.target_node = target_node
 	aim_system.init(target_node)
 	
 	rand = RandomNumberGenerator.new()
+	rand.randomize()
 
 func _physics_process(delta):
 

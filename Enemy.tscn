@@ -29,7 +29,6 @@ spawn_cycles = 3
 step_cycles = 1
 
 [node name="Enemy" type="CharacterBody2D"]
-position = Vector2(128, 48)
 collision_mask = 4
 script = ExtResource("1_pe0w2")
 
