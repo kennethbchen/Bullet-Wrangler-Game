@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2hpmn63vkd6g"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_pe0w2"]
+[ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_nw1ml"]
+[ext_resource type="Script" path="res://Scripts/AimSystem.gd" id="3_2degi"]
+[ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="4_um3hc"]
+[ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_cm7c7"]
+[ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="6_lifjb"]
+[ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="7_qr3ao"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfl4m"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
+radius = 7.0
+
+[sub_resource type="Resource" id="Resource_s47om"]
+script = ExtResource("6_lifjb")
+skip = false
+spawn_position_parent_path = NodePath("Aim")
+projectile_scene = ExtResource("5_cm7c7")
+aim_rotation_source_path = NodePath("../AimSystem")
+aim_type = 1
+position_offset = Vector2(0, 0)
+rotation_offset_degrees = 0.0
+spawn_delay = 0.2
+transition_delay = 0.5
+spawn_cycles = 3
+step_cycles = 1
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(128, 48)
+collision_mask = 4
+script = ExtResource("1_pe0w2")
+
+[node name="Bounds" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bfl4m")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_hhbvq")
+
+[node name="HealthSystem" parent="." instance=ExtResource("2_nw1ml")]
+max_health = 6
+
+[node name="AimSystem" type="Node2D" parent="."]
+script = ExtResource("3_2degi")
+
+[node name="ProjectileGenerator" type="Node2D" parent="."]
+script = ExtResource("4_um3hc")
+run_forever = true
+steps = Array[ExtResource("6_lifjb")]([SubResource("Resource_s47om")])
+
+[node name="Aim" type="Node2D" parent="ProjectileGenerator"]
+
+[node name="Marker2D" type="Marker2D" parent="ProjectileGenerator/Aim"]
+position = Vector2(8, 0)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("7_qr3ao")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="health_zeroed" from="HealthSystem" to="." method="_on_health_zeroed"]

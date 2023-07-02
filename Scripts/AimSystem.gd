@@ -8,8 +8,11 @@ extends Node2D
 
 var target_rotation_radians: float = 0
 
+func init(target: Node2D):
+	aim_target = target
+
 func _process(delta):
-	if enabled:
+	if enabled and aim_target != null:
 		target_rotation_radians = get_angle_to(aim_target.global_position)
 		rotation = lerp_angle(rotation, rotation + target_rotation_radians, aim_speed * delta) 
 

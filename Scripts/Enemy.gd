@@ -12,16 +12,20 @@ class_name Enemy
 
 @onready var health_system = $HealthSystem
 
+@onready var aim_system = $AimSystem
+
 var rand: RandomNumberGenerator
 
 var current_patrol_target: Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	aim_system.init(target_node)
+	
 	rand = RandomNumberGenerator.new()
 
 func _physics_process(delta):
-	
+
 	if current_patrol_target == null or global_position.distance_to(current_patrol_target.global_position) < patrol_max_radius:
 		current_patrol_target = patrol_point_parent.get_children()[rand.randi_range(0, patrol_point_parent.get_children().size() - 1)]
 	
