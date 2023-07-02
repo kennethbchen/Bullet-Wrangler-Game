@@ -22,7 +22,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y8ugp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eq0el"]
-size = Vector2(16, 16)
+size = Vector2(14, 15)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_puqmc"]
 radius = 3.0
@@ -32,6 +32,7 @@ script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Panel" type="Panel" parent="GameOverUI"]
 anchors_preset = 8
@@ -154,6 +155,7 @@ collision_mask = 4
 script = ExtResource("1_wwex1")
 
 [node name="Bounds" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_eq0el")
 
 [node name="Hurtbox" type="Area2D" parent="Player"]
