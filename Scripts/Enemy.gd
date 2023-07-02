@@ -18,6 +18,8 @@ var rand: RandomNumberGenerator
 
 var current_patrol_target: Node2D
 
+signal died()
+
 func init(patrol_point_parent: Node, target_node: Node2D):
 	self.patrol_point_parent = patrol_point_parent
 	self.target_node = target_node
@@ -40,6 +42,7 @@ func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 
 func _on_health_zeroed():
+	died.emit()
 	queue_free()
 
 func _on_hurtbox_area_entered(area: Area2D):
