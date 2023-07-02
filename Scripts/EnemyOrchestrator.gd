@@ -61,6 +61,7 @@ func _on_enemy_died():
 	
 	num_enemies -= 1
 	if num_enemies == 0:
+		await get_tree().create_timer(0.75).timeout
 		call_deferred("_create_enemy")
 		spawn_timer.start()
 	
