@@ -6,6 +6,9 @@ extends Node
 
 @onready var projectile_owner: Node2D
 
+# I'm lazy
+@onready var projectile_parent: Node = $"/root/Game/AttackParent"
+
 var running : bool = false
 
 func _ready():
@@ -44,8 +47,9 @@ func start():
 					spawn_pos_parent.rotation_degrees = rotation_inherit_source.rotation_degrees
 				
 				for spawn_point in spawn_pos_parent.get_children():
+
 					var new_projectile = step.projectile_scene.instantiate()
-					get_tree().root.add_child(new_projectile)
+					projectile_parent.add_child(new_projectile)
 					new_projectile.global_position = spawn_point.global_position
 					new_projectile.rotation = spawn_point.global_rotation
 					new_projectile.init(projectile_owner)

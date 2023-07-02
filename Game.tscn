@@ -1,7 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=27 format=3 uid="uid://cfr724yc67i72"]
 
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
-[ext_resource type="Script" path="res://Game.gd" id="1_xpttx"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
 [ext_resource type="Theme" uid="uid://b38ci0gydvl3p" path="res://Theme.tres" id="2_de36d"]
@@ -56,11 +56,10 @@ spawn_cycles = 3
 step_cycles = 1
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
-script = ExtResource("1_xpttx")
+script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Panel" type="Panel" parent="GameOverUI"]
 anchors_preset = 8
@@ -98,17 +97,12 @@ size_flags_vertical = 3
 text = "Game Over "
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="GameOverUI/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-text = "Restart"
-
-[node name="Spacer2" type="Control" parent="GameOverUI/Panel/VBoxContainer"]
+[node name="GameOverText2" type="Label" parent="GameOverUI/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.23
+text = "Press Space to Restart"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -171,6 +165,8 @@ position = Vector2(128, 48)
 
 [node name="4" type="Marker2D" parent="EnemyPatrolPoints"]
 position = Vector2(128, 80)
+
+[node name="AttackParent" type="Node" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(128, 128)

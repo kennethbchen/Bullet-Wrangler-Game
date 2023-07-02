@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 @export var speed: float = 75
 
 @onready var health_system: HealthSystem = $HealthSystem
@@ -7,7 +9,11 @@ extends CharacterBody2D
 
 var input_dir : Vector2
 
+var alive: bool = true
+
 signal player_died()
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,8 +21,11 @@ func _ready():
 	pass # Replace with function body.
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	if not alive: return
 	
 	input_dir = Vector2.ZERO
 	
@@ -45,7 +54,8 @@ func take_damage(damage: int):
 	
 func _on_health_zeroed():
 	player_died.emit()
-	print("ded")
+	alive = false
+	input_dir = Vector2.ZERO
 
 func _on_hurtbox_area_entered(area: Area2D):
 	
