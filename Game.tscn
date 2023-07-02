@@ -146,6 +146,8 @@ enemy_scene = ExtResource("12_liglb")
 enemy_target = NodePath("../Player")
 max_enemies = 2
 
+[node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
+
 [node name="SpawnPoint" type="Marker2D" parent="EnemyOrchestrator"]
 position = Vector2(128, -56)
 
@@ -223,6 +225,11 @@ z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("4_7p6tv")
 
+[connection signal="game_started" from="." to="GameTimer" method="_on_game_start"]
+[connection signal="game_started" from="." to="EnemyOrchestrator" method="_on_game_start"]
+[connection signal="game_stopped" from="." to="GameTimer" method="_on_game_stop"]
+[connection signal="game_stopped" from="." to="EnemyOrchestrator" method="_on_game_stop"]
+[connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]

@@ -6,8 +6,10 @@ extends Node
 @export var enemy_target: Node2D
 
 @export_category("Spawn Parameters")
-@export var enemy_spawn_delay: float = 15
+@export var enemy_spawn_delay: float = 20
 @export_range(1, 2, 1, "or_greater") var max_enemies: int = 1
+
+@onready var spawn_timer: Timer = $SpawnTimer
 
 @onready var enemy_parent: Node = $Enemies
 @onready var spawn_point: Marker2D = $SpawnPoint
@@ -20,20 +22,37 @@ func _ready():
 	assert(game_timer is Stopwatch)
 	assert(enemy_scene is PackedScene)
 	assert(enemy_target is Node2D)
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+
+func _create_enemy() -> void:
+	var new_enemy = enemy_scene.instantiate() as Enemy
+	enemy_parent.add_child(new_enemy)
+	
+	new_enemy.init(patrol_points_parent, enemy_target)
+	new_enemy.global_position = spawn_point.global_position
+	
+func get_num_enemies() -> int:
+	return enemy_parent.get_child_count()
+
+func _on_spawn_timer_timeout():
 	
 	if get_num_enemies() < max_enemies:
 		
-		var new_enemy = enemy_scene.instantiate() as Enemy
-		enemy_parent.add_child(new_enemy)
-		
-		new_enemy.init(patrol_points_parent, enemy_target)
-		new_enemy.global_position = spawn_point.global_position
-
-
+		_create_enemy()
 	
+	
+	spawn_timer.wait_time = enemy_spawn_delay
+	spawn_timer.start()
+	
+func _on_game_start():
+	
+	_on_spawn_timer_timeout()
+	
+	spawn_timer.wait_time = enemy_spawn_delay
+	spawn_timer.start()
+	
+func _on_game_stop():
+	pass
 
-func get_num_enemies() -> int:
-	return enemy_parent.get_child_count()
+

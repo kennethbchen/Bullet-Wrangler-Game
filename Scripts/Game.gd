@@ -6,10 +6,14 @@ extends Node2D
 
 var game_over: bool = false
 
+signal game_started()
+signal game_stopped()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	game_over_ui.hide()
-	game_timer.start()
+
+	game_started.emit()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,3 +25,4 @@ func _process(delta):
 func _on_player_died():
 	game_over_ui.show()
 	game_over = true
+	game_stopped.emit()
