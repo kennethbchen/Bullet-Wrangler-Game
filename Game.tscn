@@ -16,13 +16,10 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7uytu"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mlu26"]
-normal = Vector2(-1, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rexeu"]
-normal = Vector2(1, 0)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jx58e"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_y8ugp"]
-normal = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eq0el"]
 size = Vector2(16, 16)
@@ -107,25 +104,32 @@ offset_right = -31.856
 offset_bottom = -0.00800133
 grow_vertical = 2
 
-[node name="GameWalls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 0
 
-[node name="1" type="CollisionShape2D" parent="GameWalls"]
+[node name="1" type="CollisionShape2D" parent="Walls"]
 position = Vector2(128, 256)
 shape = SubResource("WorldBoundaryShape2D_7uytu")
+one_way_collision = true
 
-[node name="2" type="CollisionShape2D" parent="GameWalls"]
+[node name="2" type="CollisionShape2D" parent="Walls"]
 position = Vector2(256, 128)
+rotation = -1.5708
 shape = SubResource("WorldBoundaryShape2D_mlu26")
+one_way_collision = true
 
-[node name="3" type="CollisionShape2D" parent="GameWalls"]
+[node name="3" type="CollisionShape2D" parent="Walls"]
 position = Vector2(0, 128)
-shape = SubResource("WorldBoundaryShape2D_rexeu")
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_jx58e")
+one_way_collision = true
 
-[node name="4" type="CollisionShape2D" parent="GameWalls"]
+[node name="4" type="CollisionShape2D" parent="Walls"]
 position = Vector2(128, 0)
+rotation = 3.14159
 shape = SubResource("WorldBoundaryShape2D_y8ugp")
+one_way_collision = true
 
 [node name="EnemyPatrolPoints" type="Node" parent="."]
 
