@@ -13,6 +13,7 @@ signal health_zeroed
 
 func _ready():
 	health = max_health
+	health_changed.emit(max_health, health)
 
 func change_health(delta: int):
 	

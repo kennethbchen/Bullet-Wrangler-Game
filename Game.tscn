@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=25 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
+[ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
@@ -13,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="10_ysd5r"]
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="12_dhr3g"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="12_nsuc7"]
+[ext_resource type="Script" path="res://Scripts/TextureCounter.gd" id="14_mhgt6"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7uytu"]
 
@@ -52,6 +54,34 @@ spawn_cycles = 3
 step_cycles = 1
 
 [node name="Game" type="Node2D"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthDisplay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 8
+script = ExtResource("14_mhgt6")
+texture = ExtResource("2_ebqge")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HealthDisplay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.192
+anchor_right = 0.351
+anchor_bottom = 0.808
+offset_left = -0.304
+offset_top = 0.0079999
+offset_right = -31.856
+offset_bottom = -0.00800133
+grow_vertical = 2
 
 [node name="GameWalls" type="StaticBody2D" parent="."]
 collision_layer = 4
@@ -172,6 +202,7 @@ texture = ExtResource("12_nsuc7")
 
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]
+[connection signal="health_changed" from="Player/HealthSystem" to="UI/HealthDisplay" method="_on_health_changed"]
 [connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
 [connection signal="loop_created" from="Player/AttackSystem/LineDrawer" to="Player/AttackSystem" method="_on_loop_created"]
 [connection signal="area_entered" from="Enemy/Hurtbox" to="Enemy" method="_on_hurtbox_area_entered"]
