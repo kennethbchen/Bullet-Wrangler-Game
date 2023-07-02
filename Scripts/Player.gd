@@ -43,6 +43,8 @@ func _process(delta):
 	
 	if Input.is_action_pressed("Attack"):
 		attack_system.try_attack()
+		
+	input_dir = input_dir.normalized()
 	
 func _physics_process(delta):
 	
