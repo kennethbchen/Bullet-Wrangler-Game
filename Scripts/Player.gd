@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 @export var speed: float = 75
+@export var invulnerability_duration: float = 1
 
 @onready var health_system: HealthSystem = $HealthSystem
 @onready var attack_system = $AttackSystem
@@ -10,6 +11,8 @@ class_name Player
 var input_dir : Vector2
 
 var alive: bool = true
+
+var invulnerable = false
 
 signal player_died()
 
@@ -53,6 +56,8 @@ func _physics_process(delta):
 
 func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
+	invulnerable = true
+	get_tree().create_timer(invulnerability_duration).timeout.connect(_on_invulnerability_timeout)
 	
 func _on_health_zeroed():
 	player_died.emit()
@@ -65,7 +70,7 @@ func _on_hurtbox_area_entered(area: Area2D):
 		
 		var proj = area as Projectile
 	
-		if proj.can_damage(self):
+		if not invulnerable and proj.can_damage(self):
 			take_damage(1)
 			proj.queue_free()
 			
@@ -73,3 +78,7 @@ func _on_hurtbox_body_entered(body: Node2D):
 	
 	if body is Enemy:
 		take_damage(1)
+		
+
+func _on_invulnerability_timeout():
+	invulnerable = false
