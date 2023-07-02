@@ -7,6 +7,8 @@ extends CharacterBody2D
 
 var input_dir : Vector2
 
+signal player_died()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -42,6 +44,7 @@ func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 	
 func _on_health_zeroed():
+	player_died.emit()
 	print("ded")
 
 func _on_hurtbox_area_entered(area: Area2D):

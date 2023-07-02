@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b38ci0gydvl3p"]
+
+[ext_resource type="Texture2D" uid="uid://ddl0hedc0oshn" path="res://Sprites/Panel.png" id="1_fbqt5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwssm"]
+texture = ExtResource("1_fbqt5")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[resource]
+Panel/styles/panel = SubResource("StyleBoxTexture_bwssm")

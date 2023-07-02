@@ -1,8 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://jwmpmr20n40m"]
+[gd_scene load_steps=27 format=3 uid="uid://jwmpmr20n40m"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
+[ext_resource type="Script" path="res://Game.gd" id="1_xpttx"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
+[ext_resource type="Theme" uid="uid://b38ci0gydvl3p" path="res://Theme.tres" id="2_de36d"]
 [ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
@@ -53,7 +55,60 @@ transition_delay = 0.5
 spawn_cycles = 3
 step_cycles = 1
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
+script = ExtResource("1_xpttx")
+game_over_ui = NodePath("GameOverUI")
+
+[node name="GameOverUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Panel" type="Panel" parent="GameOverUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_de36d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverUI/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0234375
+anchor_top = 0.0234375
+anchor_right = 0.976563
+anchor_bottom = 0.976563
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Spacer" type="Control" parent="GameOverUI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
+
+[node name="GameOverText" type="Label" parent="GameOverUI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Game Over "
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="GameOverUI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "Restart"
+
+[node name="Spacer2" type="Control" parent="GameOverUI/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.23
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -200,6 +255,7 @@ position = Vector2(8, 0)
 [node name="Sprite" type="Sprite2D" parent="Enemy"]
 texture = ExtResource("12_nsuc7")
 
+[connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]
 [connection signal="health_changed" from="Player/HealthSystem" to="UI/HealthDisplay" method="_on_health_changed"]
