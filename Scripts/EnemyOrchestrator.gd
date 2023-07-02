@@ -22,9 +22,14 @@ func _ready():
 	assert(game_timer is Stopwatch)
 	assert(enemy_scene is PackedScene)
 	assert(enemy_target is Node2D)
-	
+
+func should_spawn_enemy():
+	return num_enemies < max_enemies
 
 func _create_enemy() -> void:
+	
+	num_enemies += 1
+	
 	var new_enemy = enemy_scene.instantiate() as Enemy
 	
 	enemy_parent.add_child(new_enemy)
@@ -32,21 +37,23 @@ func _create_enemy() -> void:
 	new_enemy.init(patrol_points_parent, enemy_target)
 	new_enemy.global_position = spawn_point.global_position
 	new_enemy.died.connect(_on_enemy_died)
-	
-	num_enemies += 1
-
-func should_spawn_enemy():
-	return num_enemies < max_enemies
 
 func _on_spawn_timer_timeout():
 	
 	if should_spawn_enemy():
 		_create_enemy()
 	
-	
 	spawn_timer.wait_time = enemy_spawn_delay
 	spawn_timer.start()
+
+func _on_enemy_died():
 	
+	num_enemies -= 1
+	if num_enemies == 0:
+		await get_tree().create_timer(0.75).timeout
+		call_deferred("_create_enemy")
+		spawn_timer.start()
+
 func _on_game_start():
 	
 	_on_spawn_timer_timeout()
@@ -56,15 +63,3 @@ func _on_game_start():
 	
 func _on_game_stop():
 	spawn_timer.stop()
-	
-func _on_enemy_died():
-	
-	num_enemies -= 1
-	if num_enemies == 0:
-		await get_tree().create_timer(0.75).timeout
-		call_deferred("_create_enemy")
-		spawn_timer.start()
-	
-	
-
-

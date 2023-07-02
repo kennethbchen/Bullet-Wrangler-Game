@@ -8,9 +8,9 @@ extends Area2D
 
 var loop_owner: Node2D
 
-func init(loop_owner: Node2D, points: PackedVector2Array):
+func init(new_loop_owner: Node2D, points: PackedVector2Array):
 	
-	self.loop_owner = loop_owner
+	loop_owner = new_loop_owner
 	
 	polygon_visuals.polygon = points
 	collision_polygon.polygon = points

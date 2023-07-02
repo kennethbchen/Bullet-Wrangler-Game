@@ -20,9 +20,9 @@ var current_patrol_target: Node2D
 
 signal died()
 
-func init(patrol_point_parent: Node, target_node: Node2D):
-	self.patrol_point_parent = patrol_point_parent
-	self.target_node = target_node
+func init(new_patrol_parent: Node, new_target_node: Node2D):
+	patrol_point_parent = new_patrol_parent
+	target_node = new_target_node
 	aim_system.init(target_node)
 	
 	rand = RandomNumberGenerator.new()

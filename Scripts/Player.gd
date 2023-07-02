@@ -8,24 +8,14 @@ class_name Player
 @onready var health_system: HealthSystem = $HealthSystem
 @onready var attack_system = $AttackSystem
 
-var input_dir : Vector2
+var input_dir: Vector2
 
 var alive: bool = true
 
-var invulnerable = false
+var invulnerable: bool = false
 
 signal player_died()
 
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	
-	pass # Replace with function body.
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	if not alive: return
@@ -58,6 +48,9 @@ func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 	invulnerable = true
 	get_tree().create_timer(invulnerability_duration).timeout.connect(_on_invulnerability_timeout)
+
+func _on_invulnerability_timeout():
+	invulnerable = false
 	
 func _on_health_zeroed():
 	player_died.emit()
@@ -80,5 +73,4 @@ func _on_hurtbox_body_entered(body: Node2D):
 		take_damage(1)
 		
 
-func _on_invulnerability_timeout():
-	invulnerable = false
+

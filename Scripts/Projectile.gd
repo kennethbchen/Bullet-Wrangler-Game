@@ -17,19 +17,16 @@ var current_owner: Node2D
 enum TEAM {PLAYER, ENEMY}
 var current_team: TEAM = TEAM.ENEMY
 
-func init(owner: Node2D):
-	original_owner = owner
-	change_owner(owner)
+func init(projectile_owner: Node2D):
+	original_owner = projectile_owner
+	change_owner(projectile_owner)
 	
-	if owner is Enemy:
+	if projectile_owner is Enemy:
 		current_team = TEAM.ENEMY
-	elif owner is Player:
+	elif projectile_owner is Player:
 		current_team = TEAM.PLAYER
 	
 	get_tree().create_timer(lifespan).timeout.connect(queue_free)
-
-func _ready():
-	pass
 
 func _process(delta):
 	
@@ -42,7 +39,6 @@ func _process(delta):
 		if is_instance_valid(original_owner):
 			rotation = lerp_angle(rotation, rotation + get_angle_to(original_owner.global_position), delta * 10)
 
-
 func change_owner(new_owner: Node2D):
 	current_owner = new_owner
 	
@@ -50,8 +46,6 @@ func change_owner(new_owner: Node2D):
 		current_team = TEAM.ENEMY
 	elif current_owner is Player:
 		current_team = TEAM.PLAYER
-		
-	
 
 func return_to_owner():
 	
@@ -59,7 +53,6 @@ func return_to_owner():
 		return
 		
 	current_state = State.IDLE
-	
 
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
@@ -72,7 +65,7 @@ func return_to_owner():
 			
 		current_state = State.RETURNING
 		speed = return_speed
-		)
+	)
 
 func can_damage(node: Node2D) -> bool:
 	

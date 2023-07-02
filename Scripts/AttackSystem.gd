@@ -10,7 +10,7 @@ var current_state: State = State.IDLE
 var current_polygon: PackedVector2Array
 
 func _ready():
-	assert(line_drawer != null)
+	assert(line_drawer != null, "Attack system must have line_drawer.")
 	assert(polygon_scene != null, "Attack system must have polygon_scene.")
 
 func try_attack():
@@ -30,11 +30,11 @@ func generate_polygon(points: PackedVector2Array):
 	add_child(new_poly)
 	new_poly.init(get_parent(), points)
 
-func _on_loop_created(line_drawer, points : PackedVector2Array):
+func _on_loop_created(affected_line_drawer, points : PackedVector2Array):
 	
 	if points.size() == 0: return
 		
-	line_drawer.enabled = false
+	affected_line_drawer.enabled = false
 	
 	current_polygon = points
 	

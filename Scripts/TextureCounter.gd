@@ -4,8 +4,7 @@ extends Control
 
 @onready var hbox: HBoxContainer = $HBoxContainer
 
-
-func _on_health_changed(max_health, health):
+func _on_health_changed(_max_health, health):
 	
 	if health == hbox.get_children().size():
 		return

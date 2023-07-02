@@ -21,7 +21,6 @@ func get_elapsed_seconds():
 	else:
 		end_time = stop_time
 		
-	
 	return (end_time - start_time) / 1000
 
 func _on_game_start():

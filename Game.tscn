@@ -144,7 +144,7 @@ script = ExtResource("6_fwqae")
 game_timer = NodePath("../GameTimer")
 enemy_scene = ExtResource("12_liglb")
 enemy_target = NodePath("../Player")
-max_enemies = 2
+max_enemies = 3
 
 [node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
 
