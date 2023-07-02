@@ -152,16 +152,28 @@ position = Vector2(128, -56)
 [node name="PatrolPoints" type="Node" parent="EnemyOrchestrator"]
 
 [node name="1" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
-position = Vector2(32, 64)
+position = Vector2(30, 76)
 
 [node name="2" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
-position = Vector2(224, 64)
+position = Vector2(217, 34)
 
 [node name="3" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
-position = Vector2(128, 48)
+position = Vector2(104, 49)
 
 [node name="4" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
-position = Vector2(128, 80)
+position = Vector2(120, 117)
+
+[node name="5" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(58, 135)
+
+[node name="6" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(172, 81)
+
+[node name="7" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(201, 135)
+
+[node name="8" type="Marker2D" parent="EnemyOrchestrator/PatrolPoints"]
+position = Vector2(68, 21)
 
 [node name="Enemies" type="Node" parent="EnemyOrchestrator"]
 

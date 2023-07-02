@@ -30,6 +30,7 @@ func _physics_process(delta):
 
 	if current_patrol_target == null or global_position.distance_to(current_patrol_target.global_position) < patrol_max_radius:
 		current_patrol_target = patrol_point_parent.get_children()[rand.randi_range(0, patrol_point_parent.get_children().size() - 1)]
+		print(current_patrol_target)
 	
 	velocity += (current_patrol_target.position - global_position).normalized() * speed * delta
 	
