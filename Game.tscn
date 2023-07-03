@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=25 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
 [ext_resource type="Script" path="res://Scripts/TitleScreen.gd" id="2_ihiqp"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
+[ext_resource type="TileSet" uid="uid://cmuvdge63tred" path="res://Tileset.tres" id="2_tu43w"]
 [ext_resource type="Script" path="res://Scripts/Stopwatch.gd" id="2_xnt2p"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
 [ext_resource type="Texture2D" uid="uid://ylrphuna03sj" path="res://Sprites/Projectile.png" id="3_wcujf"]
@@ -36,6 +37,13 @@ radius = 3.0
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
+
+[node name="Background" type="TileMap" parent="."]
+z_index = -5
+tile_set = ExtResource("2_tu43w")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65543, 0, 0, 65542, 0, 0, 65541, 0, 0, 65540, 0, 0, 65539, 0, 0, 65538, 0, 0, 65537, 0, 0, 65536, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 196615, 0, 0, 196614, 0, 0, 196613, 0, 0, 196612, 0, 0, 196611, 0, 0, 196610, 0, 0, 196609, 0, 0, 196608, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 327687, 0, 0, 327686, 0, 0, 327685, 0, 0, 327684, 0, 0, 327683, 0, 0, 327682, 0, 0, 327681, 0, 0, 327680, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 458759, 0, 0, 458758, 0, 0, 458757, 0, 0, 458756, 0, 0, 458755, 0, 0, 458754, 0, 0, 458753, 0, 0, 458752, 0, 0)
+metadata/_edit_lock_ = true
 
 [node name="TitleScreen" type="Node" parent="."]
 script = ExtResource("2_ihiqp")
@@ -280,6 +288,7 @@ texture = ExtResource("4_7p6tv")
 [connection signal="game_stopped" from="." to="EnemyOrchestrator" method="_on_game_stop"]
 [connection signal="tutorial_completed" from="TitleScreen" to="." method="_on_tutorial_completed"]
 [connection signal="area_entered" from="TitleScreen/CanvasLayer/TestProjectile" to="TitleScreen" method="_on_test_projectile_area_entered"]
+[connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]

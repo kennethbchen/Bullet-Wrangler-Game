@@ -26,6 +26,7 @@ func _ready():
 	assert(enemy_target is Node2D)
 
 func should_spawn_enemy():
+	
 	return num_enemies < max_enemies
 
 func _create_enemy() -> void:
