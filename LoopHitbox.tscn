@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/LoopHitbox.gd" id="1_u2wb5"]
 
 [node name="LoopHitbox" type="Area2D"]
-collision_layer = 0
+collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_u2wb5")
 lifespan = 0.25

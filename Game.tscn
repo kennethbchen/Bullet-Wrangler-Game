@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cfr724yc67i72"]
+[gd_scene load_steps=24 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -6,14 +6,18 @@
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
 [ext_resource type="Theme" uid="uid://b38ci0gydvl3p" path="res://Theme.tres" id="2_de36d"]
 [ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
+[ext_resource type="Script" path="res://Scripts/TitleScreen.gd" id="2_ihiqp"]
 [ext_resource type="Script" path="res://Scripts/LineDrawer.gd" id="2_nfbc4"]
 [ext_resource type="Script" path="res://Scripts/Stopwatch.gd" id="2_xnt2p"]
 [ext_resource type="Texture2D" uid="uid://bqyrcjomob3vk" path="res://Sprites/Player.png" id="3_8cno4"]
+[ext_resource type="Texture2D" uid="uid://ylrphuna03sj" path="res://Sprites/Projectile.png" id="3_wcujf"]
 [ext_resource type="Texture2D" uid="uid://bmws0v53bodpa" path="res://Sprites/PlayerHurtbox.png" id="4_7p6tv"]
 [ext_resource type="Script" path="res://Scripts/EnemyOrchestrator.gd" id="6_fwqae"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="PackedScene" uid="uid://d2hpmn63vkd6g" path="res://Enemy.tscn" id="12_liglb"]
 [ext_resource type="Script" path="res://Scripts/TextureCounter.gd" id="14_mhgt6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7uytu"]
 
@@ -32,6 +36,50 @@ radius = 3.0
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
+
+[node name="TitleScreen" type="Node" parent="."]
+script = ExtResource("2_ihiqp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="TitleScreen"]
+
+[node name="TestProjectile" type="Area2D" parent="TitleScreen/CanvasLayer"]
+position = Vector2(128, 209)
+collision_layer = 0
+collision_mask = 2
+
+[node name="TestProjectile" type="Sprite2D" parent="TitleScreen/CanvasLayer/TestProjectile"]
+rotation = 1.5708
+texture = ExtResource("3_wcujf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TitleScreen/CanvasLayer/TestProjectile"]
+shape = SubResource("CircleShape2D_4g25g")
+
+[node name="MainInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+offset_left = 2.0
+offset_right = 256.0
+offset_bottom = 156.0
+text = "Move: WASD or Arrow Keys
+- Dodge Projectiles
+- As you move, you draw a line
+- Draw a circle and hit Space to attack that area
+- Attack projectiles to send them back"
+autowrap_mode = 2
+
+[node name="StartInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+offset_left = 146.0
+offset_top = 171.0
+offset_right = 283.0
+offset_bottom = 249.0
+text = "Attack This Projectile To Begin"
+autowrap_mode = 2
+
+[node name="HealthInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+offset_left = 2.0
+offset_top = 200.0
+offset_right = 95.0
+offset_bottom = 226.0
+text = "Your Health"
+autowrap_mode = 2
 
 [node name="GameTimer" type="Node" parent="."]
 script = ExtResource("2_xnt2p")
@@ -147,6 +195,7 @@ enemy_target = NodePath("../Player")
 max_enemies = 3
 
 [node name="SpawnTimer" type="Timer" parent="EnemyOrchestrator"]
+one_shot = true
 
 [node name="SpawnPoint" type="Marker2D" parent="EnemyOrchestrator"]
 position = Vector2(128, -56)
@@ -229,7 +278,8 @@ texture = ExtResource("4_7p6tv")
 [connection signal="game_started" from="." to="EnemyOrchestrator" method="_on_game_start"]
 [connection signal="game_stopped" from="." to="GameTimer" method="_on_game_stop"]
 [connection signal="game_stopped" from="." to="EnemyOrchestrator" method="_on_game_stop"]
-[connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
+[connection signal="tutorial_completed" from="TitleScreen" to="." method="_on_tutorial_completed"]
+[connection signal="area_entered" from="TitleScreen/CanvasLayer/TestProjectile" to="TitleScreen" method="_on_test_projectile_area_entered"]
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]

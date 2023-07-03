@@ -11,7 +11,6 @@ signal game_stopped()
 
 func _ready():
 	game_over_ui.hide()
-	game_started.emit()
 
 func _process(delta):
 	
@@ -22,3 +21,6 @@ func _on_player_died():
 	game_over_ui.show()
 	game_over = true
 	game_stopped.emit()
+
+func _on_tutorial_completed():
+	game_started.emit()

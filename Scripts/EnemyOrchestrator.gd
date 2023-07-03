@@ -15,7 +15,9 @@ extends Node
 @onready var spawn_point: Marker2D = $SpawnPoint
 @onready var patrol_points_parent: Node = $PatrolPoints
 
-var num_enemies = 0
+var num_enemies: int = 0
+
+var enemies_defeated: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,6 +30,7 @@ func should_spawn_enemy():
 
 func _create_enemy() -> void:
 	
+	
 	num_enemies += 1
 	
 	var new_enemy = enemy_scene.instantiate() as Enemy
@@ -39,9 +42,9 @@ func _create_enemy() -> void:
 	new_enemy.died.connect(_on_enemy_died)
 
 func _on_spawn_timer_timeout():
-	
+
 	if should_spawn_enemy():
-		_create_enemy()
+		call_deferred("_create_enemy")
 	
 	spawn_timer.wait_time = enemy_spawn_delay
 	spawn_timer.start()
@@ -49,6 +52,8 @@ func _on_spawn_timer_timeout():
 func _on_enemy_died():
 	
 	num_enemies -= 1
+	enemies_defeated += 1
+	
 	if num_enemies == 0:
 		await get_tree().create_timer(0.75).timeout
 		call_deferred("_create_enemy")
