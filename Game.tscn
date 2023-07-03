@@ -66,6 +66,7 @@ shape = SubResource("CircleShape2D_4g25g")
 offset_left = 2.0
 offset_right = 256.0
 offset_bottom = 156.0
+theme = ExtResource("2_de36d")
 text = "Move: WASD or Arrow Keys
 - Dodge Projectiles
 - As you move, you draw a line
@@ -74,18 +75,20 @@ text = "Move: WASD or Arrow Keys
 autowrap_mode = 2
 
 [node name="StartInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
-offset_left = 146.0
-offset_top = 171.0
-offset_right = 283.0
-offset_bottom = 249.0
-text = "Attack This Projectile To Begin"
+offset_left = 141.0
+offset_top = 195.0
+offset_right = 255.0
+offset_bottom = 229.0
+theme = ExtResource("2_de36d")
+text = "Attack this projectile To Begin"
 autowrap_mode = 2
 
 [node name="HealthInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
 offset_left = 2.0
-offset_top = 200.0
+offset_top = 220.0
 offset_right = 95.0
-offset_bottom = 226.0
+offset_bottom = 236.0
+theme = ExtResource("2_de36d")
 text = "Your Health"
 autowrap_mode = 2
 
@@ -93,7 +96,6 @@ autowrap_mode = 2
 script = ExtResource("2_xnt2p")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Panel" type="Panel" parent="GameOverUI"]
 anchors_preset = 8
@@ -118,22 +120,28 @@ anchor_right = 0.976563
 anchor_bottom = 0.976563
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_de36d")
 metadata/_edit_use_anchors_ = true
 
 [node name="Spacer" type="Control" parent="GameOverUI/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.23
+theme = ExtResource("2_de36d")
 
-[node name="GameOverText" type="Label" parent="GameOverUI/Panel/VBoxContainer"]
+[node name="GameOverText3" type="Label" parent="GameOverUI/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Game Over "
+theme = ExtResource("2_de36d")
+theme_type_variation = &"LabelLarge"
+text = "Game Over"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="GameOverText2" type="Label" parent="GameOverUI/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("2_de36d")
 text = "Press Space to Restart"
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -150,6 +158,7 @@ offset_top = -26.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 8
+theme = ExtResource("2_de36d")
 script = ExtResource("14_mhgt6")
 texture = ExtResource("2_ebqge")
 

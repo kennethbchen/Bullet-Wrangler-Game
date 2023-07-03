@@ -23,6 +23,10 @@ window/size/window_width_override=640
 window/size/window_height_override=640
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom="res://Theme.tres"
+
 [input]
 
 Up={

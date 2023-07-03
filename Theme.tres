@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://b38ci0gydvl3p"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://b38ci0gydvl3p"]
 
 [ext_resource type="Texture2D" uid="uid://ddl0hedc0oshn" path="res://Sprites/Panel.png" id="1_fbqt5"]
+[ext_resource type="FontFile" uid="uid://v87cktuq3yg7" path="res://Font/Habbo.ttf" id="2_sua56"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bwssm"]
 texture = ExtResource("1_fbqt5")
@@ -10,4 +11,12 @@ texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
 [resource]
+default_font = ExtResource("2_sua56")
+default_font_size = 0
+Label/colors/font_color = Color(0.929412, 0.929412, 0.929412, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 4
+LabelLarge/base_type = &"Label"
+LabelLarge/font_sizes/font_size = 32
+LabelLarge/fonts/font = ExtResource("2_sua56")
 Panel/styles/panel = SubResource("StyleBoxTexture_bwssm")
