@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d2hpmn63vkd6g"]
+[gd_scene load_steps=15 format=3 uid="uid://d2hpmn63vkd6g"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_pe0w2"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_nw1ml"]
@@ -6,13 +6,21 @@
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="4_um3hc"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_cm7c7"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="6_lifjb"]
+[ext_resource type="Script" path="res://Scripts/SoundEffectController.gd" id="7_kujpb"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="7_qr3ao"]
+[ext_resource type="AudioStream" uid="uid://ih076oom6b1g" path="res://Audio/SFX/shoot1.wav" id="8_ujdq3"]
+[ext_resource type="Script" path="res://Scripts/Resources/SoundEffect.gd" id="9_erjnm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bfl4m"]
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
 radius = 7.0
+
+[sub_resource type="Resource" id="Resource_6o8ww"]
+script = ExtResource("9_erjnm")
+name = "Shoot1"
+audio_clips = Array[AudioStream]([ExtResource("8_ujdq3")])
 
 [sub_resource type="Resource" id="Resource_s47om"]
 script = ExtResource("6_lifjb")
@@ -27,6 +35,8 @@ spawn_delay = 0.2
 transition_delay = 0.5
 spawn_cycles = 3
 step_cycles = 1
+sound_effect = SubResource("Resource_6o8ww")
+sound_type = 1
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_mask = 4
@@ -52,6 +62,11 @@ script = ExtResource("3_2degi")
 script = ExtResource("4_um3hc")
 run_forever = true
 steps = Array[ExtResource("6_lifjb")]([SubResource("Resource_s47om")])
+
+[node name="SoundEffectController" type="Node" parent="ProjectileGenerator"]
+script = ExtResource("7_kujpb")
+num_players = 3
+audio_bus = "SFX"
 
 [node name="Aim" type="Node2D" parent="ProjectileGenerator"]
 

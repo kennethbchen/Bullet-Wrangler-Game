@@ -1,5 +1,7 @@
 extends Node
 
+class_name SoundEffectController
+
 @export_range(0, 1, 1, "or_greater") var num_players: int = 1
 
 @export var audio_bus = "Master"
@@ -28,14 +30,13 @@ func _ready():
 		
 		var effect = sound_effects[i]
 		
-		effect_map[sound_effects[i].name] = i
-		last_played_map[sound_effects[i].name] = -1
+		add_sfx(effect)
 		
 	# Create AudioStreamPlayers
 	for _i in range(0, num_players):
 		var player = AudioStreamPlayer.new()
 		player.bus = audio_bus
-		player.finished.connect(self, "_on_player_done")
+		player.finished.connect(_on_player_done)
 		audio_players.append(player)
 		
 		add_child(player)
@@ -45,6 +46,7 @@ func _get_effect(name: String):
 	if not effect_map.has(name):
 		push_warning("SoundEffectController has no effect named ", name)
 		return null
+	
 	
 	return sound_effects[effect_map[name]]
 
@@ -56,6 +58,14 @@ func _try_play_sound(audio: AudioStream):
 			player.stream = audio
 			player.play()
 			
+
+func add_sfx(new_effect: SoundEffect):
+	
+	assert(not new_effect.name in effect_map, "Duplicate Sound Effect Name")
+	
+	sound_effects.push_back(new_effect)
+	effect_map[new_effect.name] = effect_map.size()
+	last_played_map[new_effect.name] = -1
 
 func play_random(name: String) -> void:
 	
@@ -77,7 +87,9 @@ func play_random(name: String) -> void:
 	last_played_map[name] = index
 	
 	_try_play_sound(clips[index])
-	
+
+func play_one_shot(sound):
+	_try_play_sound(sound)
 
 func _on_player_done() -> void:
 	

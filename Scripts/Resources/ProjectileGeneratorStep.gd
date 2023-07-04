@@ -3,6 +3,7 @@ extends Resource
 class_name ProjectileGeneratorStep
 
 enum AIM_TYPE {PER_STEP, PER_SPAWN}
+enum SFX_TYPE {PER_STEP, PER_SPAWN}
 
 @export var skip: bool = false
 
@@ -30,6 +31,10 @@ enum AIM_TYPE {PER_STEP, PER_SPAWN}
 @export_group("Repeat Parameters")
 @export_range(1, 100, 1, "or_greater") var spawn_cycles: int = 1
 @export_range(1, 100, 1, "or_greater") var step_cycles: int = 1
+
+@export_group("Sound")
+@export var sound_effect: SoundEffect
+@export var sound_type: SFX_TYPE
 
 func _ready():
 	assert(spawn_position_parent_path is NodePath)
