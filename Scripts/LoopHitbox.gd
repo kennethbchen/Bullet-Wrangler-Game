@@ -37,7 +37,7 @@ func init(new_loop_owner: Node2D, points: PackedVector2Array):
 	tween.tween_callback(func():
 		for projectile in detected_projectiles:
 			
-			projectile.change_owner(loop_owner)
+			
 			projectile.return_to_owner()
 			
 			sound_requested.emit("attack2")
@@ -51,4 +51,5 @@ func _on_area_entered(area: Area2D):
 	if area is Projectile:
 		
 		detected_projectiles.push_back(area)
+		area.change_owner(loop_owner)
 		area.slow()

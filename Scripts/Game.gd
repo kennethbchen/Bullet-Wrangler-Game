@@ -19,8 +19,11 @@ func _process(delta):
 
 func _on_player_died():
 	game_over_ui.show()
-	game_over = true
 	game_stopped.emit()
+	
+	# Don't accept input for a little after dying
+	await get_tree().create_timer(1).timeout
+	game_over = true
 
 func _on_tutorial_completed():
 	game_started.emit()
