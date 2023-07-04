@@ -96,15 +96,16 @@ shape = SubResource("CircleShape2D_4g25g")
 
 [node name="MainInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
 offset_left = 2.0
+offset_top = 3.0
 offset_right = 256.0
-offset_bottom = 156.0
+offset_bottom = 104.0
 theme = ExtResource("2_de36d")
 text = "Move: WASD or Arrow Keys
 - Dodge Projectiles
 - As you move, you draw a line
-- Draw a circle and hit Space to attack that area
+- Draw a circle + hit Space to attack that area
 - Attack projectiles to send them back"
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="StartInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
 offset_left = 141.0
@@ -128,6 +129,7 @@ autowrap_mode = 2
 script = ExtResource("2_xnt2p")
 
 [node name="GameOverUI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Panel" type="Panel" parent="GameOverUI"]
 anchors_preset = 8
