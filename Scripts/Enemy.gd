@@ -11,8 +11,9 @@ class_name Enemy
 @export var patrol_max_radius: float = 20
 
 @onready var health_system = $HealthSystem
-
 @onready var aim_system = $AimSystem
+@onready var sfx_controller = $SoundEffectController
+@onready var projectile_generator = $ProjectileGenerator
 
 var rand: RandomNumberGenerator
 
@@ -39,10 +40,18 @@ func _physics_process(delta):
 	
 	
 func take_damage(damage: int):
+	sfx_controller.play("hurt")
 	health_system.change_health(-abs(damage))
+	
 
 func _on_health_zeroed():
 	died.emit()
+	
+	projectile_generator.run_forever = false
+	
+	if sfx_controller.is_playing():
+		await sfx_controller.players_finished
+	
 	queue_free()
 
 func _on_hurtbox_area_entered(area: Area2D):

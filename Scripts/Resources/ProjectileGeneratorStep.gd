@@ -33,8 +33,8 @@ enum SFX_TYPE {PER_STEP, PER_SPAWN}
 @export_range(1, 100, 1, "or_greater") var step_cycles: int = 1
 
 @export_group("Sound")
-@export var sound_effect: SoundEffect
-@export var sound_type: SFX_TYPE
+@export var sound_effect_name: String = ""
+@export var sound_type: SFX_TYPE = SFX_TYPE.PER_STEP
 
 func _ready():
 	assert(spawn_position_parent_path is NodePath)

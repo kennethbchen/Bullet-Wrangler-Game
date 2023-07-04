@@ -7,5 +7,5 @@ class_name SoundEffect
 @export var audio_clips: Array[AudioStream]
 
 func _ready():
-	print("ey")
 	assert(not name.is_empty())
+	assert(not audio_clips.is_empty())

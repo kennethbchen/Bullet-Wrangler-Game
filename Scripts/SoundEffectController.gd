@@ -30,7 +30,8 @@ func _ready():
 		
 		var effect = sound_effects[i]
 		
-		add_sfx(effect)
+		effect_map[effect.name] = effect_map.size()
+		last_played_map[effect.name] = -1
 		
 	# Create AudioStreamPlayers
 	for _i in range(0, num_players):
@@ -41,13 +42,10 @@ func _ready():
 		
 		add_child(player)
 
+func _has_effect(name: String):
+	return effect_map.has(name)
+
 func _get_effect(name: String):
-	
-	if not effect_map.has(name):
-		push_warning("SoundEffectController has no effect named ", name)
-		return null
-	
-	
 	return sound_effects[effect_map[name]]
 
 
@@ -57,17 +55,13 @@ func _try_play_sound(audio: AudioStream):
 		if not player.playing:
 			player.stream = audio
 			player.play()
-			
+			return
 
-func add_sfx(new_effect: SoundEffect):
+func play(name: String) -> void:
 	
-	assert(not new_effect.name in effect_map, "Duplicate Sound Effect Name")
-	
-	sound_effects.push_back(new_effect)
-	effect_map[new_effect.name] = effect_map.size()
-	last_played_map[new_effect.name] = -1
-
-func play_random(name: String) -> void:
+	if not _has_effect(name):
+		push_warning("SoundEffectController has no effect named ", name)
+		return
 	
 	var clips = _get_effect(name).audio_clips
 	
@@ -91,6 +85,13 @@ func play_random(name: String) -> void:
 func play_one_shot(sound):
 	_try_play_sound(sound)
 
+func is_playing() -> bool:
+	for player in audio_players:
+		if player.playing:
+			return true
+	
+	return false
+
 func _on_player_done() -> void:
 	
 	for player in audio_players:
@@ -99,3 +100,5 @@ func _on_player_done() -> void:
 	
 	players_finished.emit()
 
+func _on_sound_requested(name: String):
+	play(name)

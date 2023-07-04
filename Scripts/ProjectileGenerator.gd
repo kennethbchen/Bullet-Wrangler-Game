@@ -6,20 +6,16 @@ extends Node
 
 @onready var projectile_owner: Node2D
 
-@onready var sfx_controller: SoundEffectController = $SoundEffectController
 
 # I'm lazy
 @onready var projectile_parent: Node = $"/root/Game/AttackParent"
 
 var running : bool = false
 
+signal sound_requested(name: String)
+
 func _ready():
 	projectile_owner = get_parent()
-	
-	for step in steps:
-		
-		if step.sound_effect != null:
-			sfx_controller.add_sfx(step.sound_effect)
 
 
 func _process(delta):
@@ -49,8 +45,8 @@ func start():
 				spawn_pos_parent.rotation_degrees = rotation_inherit_source.rotation_degrees
 			
 			# Play Sound Effect if needed
-			if step.sound_effect != null and step.sound_type == step.SFX_TYPE.PER_STEP:
-				sfx_controller.play_random(step.sound_effect.name)
+			if not step.sound_effect_name.is_empty() and step.sound_type == step.SFX_TYPE.PER_STEP:
+				sound_requested.emit(step.sound_effect_name)
 			
 			for spawn_cycle in range(0, step.spawn_cycles):
 				
@@ -60,8 +56,8 @@ func start():
 					spawn_pos_parent.rotation_degrees = rotation_inherit_source.rotation_degrees
 				
 				# Play Sound Effect if needed
-				if step.sound_effect != null and step.sound_type == step.SFX_TYPE.PER_SPAWN:
-					sfx_controller.play_random(step.sound_effect.name)
+				if not step.sound_effect_name.is_empty() and step.sound_type == step.SFX_TYPE.PER_SPAWN:
+					sound_requested.emit(step.sound_effect_name)
 				
 				for spawn_point in spawn_pos_parent.get_children():
 

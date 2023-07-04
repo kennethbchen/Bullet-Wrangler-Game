@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2hpmn63vkd6g"]
+[gd_scene load_steps=17 format=3 uid="uid://d2hpmn63vkd6g"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_pe0w2"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_nw1ml"]
 [ext_resource type="Script" path="res://Scripts/AimSystem.gd" id="3_2degi"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="4_um3hc"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_cm7c7"]
+[ext_resource type="AudioStream" uid="uid://cqdyebdauy6op" path="res://Audio/SFX/enemyhurt.wav" id="5_i86sc"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="6_lifjb"]
 [ext_resource type="Script" path="res://Scripts/SoundEffectController.gd" id="7_kujpb"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="7_qr3ao"]
@@ -17,9 +18,14 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hhbvq"]
 radius = 7.0
 
-[sub_resource type="Resource" id="Resource_6o8ww"]
+[sub_resource type="Resource" id="Resource_lgoye"]
 script = ExtResource("9_erjnm")
-name = "Shoot1"
+name = "hurt"
+audio_clips = Array[AudioStream]([ExtResource("5_i86sc")])
+
+[sub_resource type="Resource" id="Resource_l4nx0"]
+script = ExtResource("9_erjnm")
+name = "shoot"
 audio_clips = Array[AudioStream]([ExtResource("8_ujdq3")])
 
 [sub_resource type="Resource" id="Resource_s47om"]
@@ -35,7 +41,7 @@ spawn_delay = 0.2
 transition_delay = 0.5
 spawn_cycles = 3
 step_cycles = 1
-sound_effect = SubResource("Resource_6o8ww")
+sound_effect_name = "shoot"
 sound_type = 1
 
 [node name="Enemy" type="CharacterBody2D"]
@@ -58,15 +64,16 @@ max_health = 6
 [node name="AimSystem" type="Node2D" parent="."]
 script = ExtResource("3_2degi")
 
+[node name="SoundEffectController" type="Node" parent="."]
+script = ExtResource("7_kujpb")
+num_players = 5
+audio_bus = "SFX"
+sound_effects = Array[ExtResource("9_erjnm")]([SubResource("Resource_lgoye"), SubResource("Resource_l4nx0")])
+
 [node name="ProjectileGenerator" type="Node2D" parent="."]
 script = ExtResource("4_um3hc")
 run_forever = true
 steps = Array[ExtResource("6_lifjb")]([SubResource("Resource_s47om")])
-
-[node name="SoundEffectController" type="Node" parent="ProjectileGenerator"]
-script = ExtResource("7_kujpb")
-num_players = 3
-audio_bus = "SFX"
 
 [node name="Aim" type="Node2D" parent="ProjectileGenerator"]
 
@@ -78,3 +85,4 @@ texture = ExtResource("7_qr3ao")
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="health_zeroed" from="HealthSystem" to="." method="_on_health_zeroed"]
+[connection signal="sound_requested" from="ProjectileGenerator" to="SoundEffectController" method="_on_sound_requested"]
