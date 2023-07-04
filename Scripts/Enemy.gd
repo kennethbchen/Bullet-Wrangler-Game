@@ -40,15 +40,18 @@ func _physics_process(delta):
 	
 	
 func take_damage(damage: int):
-	sfx_controller.play("hurt")
-	health_system.change_health(-abs(damage))
 	
+	health_system.change_health(-abs(damage))
+	sfx_controller.play("hurt")
 
 func _on_health_zeroed():
 	died.emit()
 	
 	projectile_generator.run_forever = false
 	
+	sfx_controller.play("death")
+	hide()
+	projectile_generator.stop()
 	if sfx_controller.is_playing():
 		await sfx_controller.players_finished
 	

@@ -12,6 +12,8 @@ extends Node
 
 var running : bool = false
 
+var should_stop = false
+
 signal sound_requested(name: String)
 
 func _ready():
@@ -23,6 +25,10 @@ func _process(delta):
 	if run_forever and not running:
 		start()
 
+func stop():
+	should_stop = true
+	run_forever = false
+	
 func start():
 	
 	if running: return
@@ -38,6 +44,10 @@ func start():
 		var rotation_inherit_source: Node2D = get_node_or_null(step.aim_rotation_source_path)
 		
 		for step_cycle in range(0, step.step_cycles):
+			
+			if should_stop:
+				should_stop = false
+				return
 			
 			# Inherit rotation if needed
 			if rotation_inherit_source != null and \

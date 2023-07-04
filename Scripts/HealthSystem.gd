@@ -15,7 +15,7 @@ func _ready():
 
 func change_health(delta: int):
 	
-	if delta == 0: return
+	if delta == 0 or health == 0 and delta < 0: return
 	
 	health = max(0, min(max_health, health + delta))
 	
