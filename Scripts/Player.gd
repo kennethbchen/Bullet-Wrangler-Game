@@ -61,6 +61,7 @@ func _on_health_zeroed():
 	alive = false
 	input_dir = Vector2.ZERO
 	sfx_controller.play("death")
+	hide()
 
 func _on_hurtbox_area_entered(area: Area2D):
 	
