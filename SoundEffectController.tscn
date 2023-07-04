@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://befue82ruh6n5"]
+
+[ext_resource type="Script" path="res://Scripts/SoundEffectController.gd" id="1_5d5wu"]
+
+[node name="SoundEffectController" type="Node"]
+script = ExtResource("1_5d5wu")
+num_players = 5
+audio_bus = "SFX"

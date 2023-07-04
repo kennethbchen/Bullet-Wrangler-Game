@@ -5,25 +5,25 @@
 [ext_resource type="Script" path="res://Scripts/AimSystem.gd" id="3_2degi"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="4_um3hc"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_cm7c7"]
-[ext_resource type="AudioStream" uid="uid://cqdyebdauy6op" path="res://Audio/SFX/enemyhurt.wav" id="5_i86sc"]
+[ext_resource type="AudioStream" uid="uid://cqdyebdauy6op" path="res://Audio/SFX/enemyHurt.wav" id="5_k4sp0"]
+[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/death.wav" id="5_kcdjc"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="6_lifjb"]
-[ext_resource type="Script" path="res://Scripts/SoundEffectController.gd" id="7_kujpb"]
-[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/enemydeath.wav" id="7_o684q"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="7_qr3ao"]
 [ext_resource type="AudioStream" uid="uid://ih076oom6b1g" path="res://Audio/SFX/shoot1.wav" id="8_ujdq3"]
 [ext_resource type="Script" path="res://Scripts/Resources/SoundEffect.gd" id="9_erjnm"]
+[ext_resource type="PackedScene" uid="uid://befue82ruh6n5" path="res://SoundEffectController.tscn" id="9_tsq5l"]
 
-[sub_resource type="Resource" id="Resource_lgoye"]
-script = ExtResource("9_erjnm")
-name = "hurt"
-audio_clips = Array[AudioStream]([ExtResource("5_i86sc")])
-
-[sub_resource type="Resource" id="Resource_wfsg7"]
+[sub_resource type="Resource" id="Resource_gpl4u"]
 script = ExtResource("9_erjnm")
 name = "death"
-audio_clips = Array[AudioStream]([ExtResource("7_o684q")])
+audio_clips = Array[AudioStream]([ExtResource("5_kcdjc")])
 
-[sub_resource type="Resource" id="Resource_l4nx0"]
+[sub_resource type="Resource" id="Resource_b57av"]
+script = ExtResource("9_erjnm")
+name = "hurt"
+audio_clips = Array[AudioStream]([ExtResource("5_k4sp0")])
+
+[sub_resource type="Resource" id="Resource_327v1"]
 script = ExtResource("9_erjnm")
 name = "shoot"
 audio_clips = Array[AudioStream]([ExtResource("8_ujdq3")])
@@ -60,11 +60,8 @@ max_health = 6
 [node name="AimSystem" type="Node2D" parent="."]
 script = ExtResource("3_2degi")
 
-[node name="SoundEffectController" type="Node" parent="."]
-script = ExtResource("7_kujpb")
-num_players = 5
-audio_bus = "SFX"
-sound_effects = Array[ExtResource("9_erjnm")]([SubResource("Resource_lgoye"), SubResource("Resource_wfsg7"), SubResource("Resource_l4nx0")])
+[node name="SoundEffectController" parent="." instance=ExtResource("9_tsq5l")]
+sound_effects = Array[ExtResource("9_erjnm")]([SubResource("Resource_gpl4u"), SubResource("Resource_b57av"), SubResource("Resource_327v1")])
 
 [node name="ProjectileGenerator" type="Node2D" parent="."]
 script = ExtResource("4_um3hc")

@@ -8,6 +8,9 @@ class_name Player
 @onready var health_system: HealthSystem = $HealthSystem
 @onready var attack_system = $AttackSystem
 
+@onready var sfx_controller = $SoundEffectController
+@onready var hurtbox = $Hurtbox
+
 var input_dir: Vector2
 
 var alive: bool = true
@@ -50,12 +53,14 @@ func take_damage(damage: int):
 	get_tree().create_timer(invulnerability_duration).timeout.connect(_on_invulnerability_timeout)
 
 func _on_invulnerability_timeout():
-	invulnerable = false
+	if alive:
+		invulnerable = false
 	
 func _on_health_zeroed():
 	player_died.emit()
 	alive = false
 	input_dir = Vector2.ZERO
+	sfx_controller.play("death")
 
 func _on_hurtbox_area_entered(area: Area2D):
 	
@@ -65,6 +70,7 @@ func _on_hurtbox_area_entered(area: Area2D):
 	
 		if not invulnerable and proj.can_damage(self):
 			take_damage(1)
+			sfx_controller.play("hit")
 			proj.queue_free()
 			
 func _on_hurtbox_body_entered(body: Node2D):

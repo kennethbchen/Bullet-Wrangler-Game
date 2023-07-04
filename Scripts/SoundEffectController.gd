@@ -42,11 +42,11 @@ func _ready():
 		
 		add_child(player)
 
-func _has_effect(name: String):
-	return effect_map.has(name)
+func _has_effect(effect_name: String):
+	return effect_map.has(effect_name)
 
-func _get_effect(name: String):
-	return sound_effects[effect_map[name]]
+func _get_effect(effect_name: String):
+	return sound_effects[effect_map[effect_name]]
 
 
 func _try_play_sound(audio: AudioStream):

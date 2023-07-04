@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=31 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -17,6 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="PackedScene" uid="uid://d2hpmn63vkd6g" path="res://Enemy.tscn" id="12_liglb"]
 [ext_resource type="Script" path="res://Scripts/TextureCounter.gd" id="14_mhgt6"]
+[ext_resource type="PackedScene" uid="uid://befue82ruh6n5" path="res://SoundEffectController.tscn" id="18_qbaxf"]
+[ext_resource type="AudioStream" uid="uid://8lln3q6muuph" path="res://Audio/SFX/playerHurt.wav" id="19_xyeau"]
+[ext_resource type="Script" path="res://Scripts/Resources/SoundEffect.gd" id="20_m66bl"]
+[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/death.wav" id="21_ylr8y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
 
@@ -33,6 +37,16 @@ size = Vector2(14, 15)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_puqmc"]
 radius = 3.0
+
+[sub_resource type="Resource" id="Resource_enp0o"]
+script = ExtResource("20_m66bl")
+name = "hit"
+audio_clips = Array[AudioStream]([ExtResource("19_xyeau")])
+
+[sub_resource type="Resource" id="Resource_y34oe"]
+script = ExtResource("20_m66bl")
+name = "death"
+audio_clips = Array[AudioStream]([ExtResource("21_ylr8y")])
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
@@ -290,6 +304,10 @@ texture = ExtResource("3_8cno4")
 z_index = 1
 position = Vector2(0, 3)
 texture = ExtResource("4_7p6tv")
+
+[node name="SoundEffectController" parent="Player" instance=ExtResource("18_qbaxf")]
+num_players = 4
+sound_effects = Array[ExtResource("20_m66bl")]([SubResource("Resource_enp0o"), SubResource("Resource_y34oe")])
 
 [connection signal="game_started" from="." to="GameTimer" method="_on_game_start"]
 [connection signal="game_started" from="." to="EnemyOrchestrator" method="_on_game_start"]

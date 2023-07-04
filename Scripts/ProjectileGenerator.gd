@@ -45,9 +45,7 @@ func start():
 		
 		for step_cycle in range(0, step.step_cycles):
 			
-			if should_stop:
-				should_stop = false
-				return
+			
 			
 			# Inherit rotation if needed
 			if rotation_inherit_source != null and \
@@ -59,6 +57,10 @@ func start():
 				sound_requested.emit(step.sound_effect_name)
 			
 			for spawn_cycle in range(0, step.spawn_cycles):
+				
+				if should_stop:
+					should_stop = false
+					return
 				
 				# Inherit rotation if needed
 				if rotation_inherit_source != null and \

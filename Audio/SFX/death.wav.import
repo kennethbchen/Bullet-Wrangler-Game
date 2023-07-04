@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cqdyebdauy6op"
-path="res://.godot/imported/enemyHurt.wav-4f607e4ede675c36b90a6b7a4d521c46.sample"
+uid="uid://c30wyql1mh24l"
+path="res://.godot/imported/death.wav-4432ab88ffdb181b49a98a771147635a.sample"
 
 [deps]
 
-source_file="res://Audio/SFX/enemyHurt.wav"
-dest_files=["res://.godot/imported/enemyHurt.wav-4f607e4ede675c36b90a6b7a4d521c46.sample"]
+source_file="res://Audio/SFX/death.wav"
+dest_files=["res://.godot/imported/death.wav-4432ab88ffdb181b49a98a771147635a.sample"]
 
 [params]
 
