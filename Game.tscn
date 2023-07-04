@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=26 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://Scripts/EnemyOrchestrator.gd" id="6_fwqae"]
 [ext_resource type="PackedScene" uid="uid://dxsmy4ea4657t" path="res://LoopHitbox.tscn" id="7_rq6yi"]
 [ext_resource type="PackedScene" uid="uid://d2hpmn63vkd6g" path="res://Enemy.tscn" id="12_liglb"]
+[ext_resource type="Script" path="res://Scripts/SoundEffectController.gd" id="12_v73lj"]
 [ext_resource type="Script" path="res://Scripts/TextureCounter.gd" id="14_mhgt6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
@@ -250,6 +251,9 @@ position = Vector2(128, 192)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_wwex1")
+
+[node name="SoundEffectController" type="Node" parent="Player"]
+script = ExtResource("12_v73lj")
 
 [node name="Bounds" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 0.5)
