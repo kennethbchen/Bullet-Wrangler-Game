@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=37 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -21,6 +21,9 @@
 [ext_resource type="AudioStream" uid="uid://8lln3q6muuph" path="res://Audio/SFX/playerHurt.wav" id="19_xyeau"]
 [ext_resource type="Script" path="res://Scripts/Resources/SoundEffect.gd" id="20_m66bl"]
 [ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/playerDeath.wav" id="21_cnyuy"]
+[ext_resource type="AudioStream" uid="uid://dghd7wda0kx8k" path="res://Audio/SFX/playerAttack1.wav" id="22_mokkd"]
+[ext_resource type="AudioStream" uid="uid://g7wupnihhyt4" path="res://Audio/SFX/playerAttack2.wav" id="23_tq7gh"]
+[ext_resource type="AudioStream" uid="uid://demclsetnrgc0" path="res://Audio/SFX/loopCompleted.wav" id="24_gsrfd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
 
@@ -47,6 +50,21 @@ audio_clips = Array[AudioStream]([ExtResource("19_xyeau")])
 script = ExtResource("20_m66bl")
 name = "death"
 audio_clips = Array[AudioStream]([ExtResource("21_cnyuy")])
+
+[sub_resource type="Resource" id="Resource_evuqd"]
+script = ExtResource("20_m66bl")
+name = "attack1"
+audio_clips = Array[AudioStream]([ExtResource("22_mokkd")])
+
+[sub_resource type="Resource" id="Resource_8uen2"]
+script = ExtResource("20_m66bl")
+name = "attack2"
+audio_clips = Array[AudioStream]([ExtResource("23_tq7gh")])
+
+[sub_resource type="Resource" id="Resource_60j43"]
+script = ExtResource("20_m66bl")
+name = "loopcreate"
+audio_clips = Array[AudioStream]([ExtResource("24_gsrfd")])
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
@@ -307,7 +325,7 @@ texture = ExtResource("4_7p6tv")
 
 [node name="SoundEffectController" parent="Player" instance=ExtResource("18_qbaxf")]
 num_players = 4
-sound_effects = Array[ExtResource("20_m66bl")]([SubResource("Resource_enp0o"), SubResource("Resource_y34oe")])
+sound_effects = Array[ExtResource("20_m66bl")]([SubResource("Resource_enp0o"), SubResource("Resource_y34oe"), SubResource("Resource_evuqd"), SubResource("Resource_8uen2"), SubResource("Resource_60j43")])
 
 [connection signal="game_started" from="." to="GameTimer" method="_on_game_start"]
 [connection signal="game_started" from="." to="EnemyOrchestrator" method="_on_game_start"]
@@ -321,4 +339,5 @@ sound_effects = Array[ExtResource("20_m66bl")]([SubResource("Resource_enp0o"), S
 [connection signal="body_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_body_entered"]
 [connection signal="health_changed" from="Player/HealthSystem" to="UI/HealthDisplay" method="_on_health_changed"]
 [connection signal="health_zeroed" from="Player/HealthSystem" to="Player" method="_on_health_zeroed"]
+[connection signal="sound_requested" from="Player/AttackSystem" to="Player/SoundEffectController" method="_on_sound_requested"]
 [connection signal="loop_created" from="Player/AttackSystem/LineDrawer" to="Player/AttackSystem" method="_on_loop_created"]

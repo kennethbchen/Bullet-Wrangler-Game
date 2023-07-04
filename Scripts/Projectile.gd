@@ -5,7 +5,7 @@ class_name Projectile
 enum State {IDLE, TRAVELLING, RETURNING}
 
 @export var speed: float = 60
-@export var return_speed: float = 210
+@export var return_speed: float = 250
 @export var lifespan: float = 5
 
 var current_state: State = State.TRAVELLING
@@ -37,7 +37,7 @@ func _process(delta):
 		position += transform.x * speed * delta
 		
 		if is_instance_valid(original_owner):
-			rotation = lerp_angle(rotation, rotation + get_angle_to(original_owner.global_position), delta * 10)
+			rotation = lerp_angle(rotation, rotation + get_angle_to(original_owner.global_position), delta * 20)
 
 func change_owner(new_owner: Node2D):
 	current_owner = new_owner
@@ -47,25 +47,26 @@ func change_owner(new_owner: Node2D):
 	elif current_owner is Player:
 		current_team = TEAM.PLAYER
 
-func return_to_owner():
+func slow():
 	
 	if current_state != State.TRAVELLING:
 		return
 		
 	current_state = State.IDLE
-
+	
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(self, "position", position + transform.x * 20, 0.3)
-	tween.tween_callback(func(): 
-	
-		if is_instance_valid(original_owner):
-			rotation = rotation + get_angle_to(original_owner.global_position)
+
+
+func return_to_owner():	
+	if is_instance_valid(original_owner):
+		rotation = rotation + get_angle_to(original_owner.global_position)
 			
-		current_state = State.RETURNING
-		speed = return_speed
-	)
+	current_state = State.RETURNING
+	speed = return_speed
+		
 
 func can_damage(node: Node2D) -> bool:
 	
