@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://befue82ruh6n5" path="res://SoundEffectController.tscn" id="18_qbaxf"]
 [ext_resource type="AudioStream" uid="uid://8lln3q6muuph" path="res://Audio/SFX/playerHurt.wav" id="19_xyeau"]
 [ext_resource type="Script" path="res://Scripts/Resources/SoundEffect.gd" id="20_m66bl"]
-[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/death.wav" id="21_ylr8y"]
+[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/playerDeath.wav" id="21_cnyuy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
 
@@ -46,7 +46,7 @@ audio_clips = Array[AudioStream]([ExtResource("19_xyeau")])
 [sub_resource type="Resource" id="Resource_y34oe"]
 script = ExtResource("20_m66bl")
 name = "death"
-audio_clips = Array[AudioStream]([ExtResource("21_ylr8y")])
+audio_clips = Array[AudioStream]([ExtResource("21_cnyuy")])
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")

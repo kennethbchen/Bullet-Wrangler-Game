@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://Scripts/AimSystem.gd" id="3_2degi"]
 [ext_resource type="Script" path="res://Scripts/ProjectileGenerator.gd" id="4_um3hc"]
 [ext_resource type="PackedScene" uid="uid://bbolx8a630ljg" path="res://Projectile.tscn" id="5_cm7c7"]
+[ext_resource type="AudioStream" uid="uid://bh8igvh3dywb7" path="res://Audio/SFX/enemyDeath.wav" id="5_idot3"]
 [ext_resource type="AudioStream" uid="uid://cqdyebdauy6op" path="res://Audio/SFX/enemyHurt.wav" id="5_k4sp0"]
-[ext_resource type="AudioStream" uid="uid://c30wyql1mh24l" path="res://Audio/SFX/death.wav" id="5_kcdjc"]
 [ext_resource type="Script" path="res://Scripts/Resources/ProjectileGeneratorStep.gd" id="6_lifjb"]
 [ext_resource type="Texture2D" uid="uid://3qdggpkx14la" path="res://Sprites/Enemy.png" id="7_qr3ao"]
 [ext_resource type="AudioStream" uid="uid://ih076oom6b1g" path="res://Audio/SFX/shoot1.wav" id="8_ujdq3"]
@@ -16,7 +16,7 @@
 [sub_resource type="Resource" id="Resource_gpl4u"]
 script = ExtResource("9_erjnm")
 name = "death"
-audio_clips = Array[AudioStream]([ExtResource("5_kcdjc")])
+audio_clips = Array[AudioStream]([ExtResource("5_idot3")])
 
 [sub_resource type="Resource" id="Resource_b57av"]
 script = ExtResource("9_erjnm")
