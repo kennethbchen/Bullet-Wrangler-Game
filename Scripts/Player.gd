@@ -4,12 +4,15 @@ class_name Player
 
 @export var speed: float = 75
 @export var invulnerability_duration: float = 1
+@export var invulnerability_flashes: int = 4
 
 @onready var health_system: HealthSystem = $HealthSystem
 @onready var attack_system = $AttackSystem
 
 @onready var sfx_controller = $SoundEffectController
 @onready var hurtbox = $Hurtbox
+
+@onready var sprite: Sprite2D = $Sprite
 
 var input_dir: Vector2
 
@@ -51,6 +54,13 @@ func take_damage(damage: int):
 	health_system.change_health(-abs(damage))
 	invulnerable = true
 	get_tree().create_timer(invulnerability_duration).timeout.connect(_on_invulnerability_timeout)
+	
+
+	var tween = get_tree().create_tween()
+	
+	tween.tween_property(sprite, "modulate", Color(1,1,1,0), invulnerability_duration / (invulnerability_flashes * 2))
+	tween.tween_property(sprite, "modulate", Color(1,1,1,1), invulnerability_duration / (invulnerability_flashes * 2))
+	tween.set_loops(invulnerability_flashes)
 
 func _on_invulnerability_timeout():
 	if alive:
