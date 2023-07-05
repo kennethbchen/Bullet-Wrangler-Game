@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=39 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
@@ -25,6 +25,8 @@
 [ext_resource type="AudioStream" uid="uid://dghd7wda0kx8k" path="res://Audio/SFX/playerAttack1.wav" id="22_mokkd"]
 [ext_resource type="AudioStream" uid="uid://g7wupnihhyt4" path="res://Audio/SFX/playerAttack2.wav" id="23_tq7gh"]
 [ext_resource type="AudioStream" uid="uid://demclsetnrgc0" path="res://Audio/SFX/loopCompleted.wav" id="24_gsrfd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6rg7a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g25g"]
 
@@ -72,7 +74,7 @@ script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(128, 130)
+position = Vector2(128, 128)
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_7cta3")
@@ -88,43 +90,87 @@ metadata/_edit_lock_ = true
 [node name="TitleScreen" type="Node" parent="."]
 script = ExtResource("2_ihiqp")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="TitleScreen"]
+[node name="Credits" type="CanvasLayer" parent="TitleScreen"]
+visible = false
 
-[node name="TestProjectile" type="Area2D" parent="TitleScreen/CanvasLayer"]
+[node name="CreditsText" type="Label" parent="TitleScreen/Credits"]
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 256.0
+offset_bottom = 104.0
+theme = ExtResource("2_de36d")
+text = "Credits:
+\"Habbo\" Font by Nimble Beasts Collective
+https://nimblebeastscollective.itch.io/nb-pixel-font-bundle
+
+Sound effects made in jsfxr
+https://sfxr.me/
+
+Song \"achilles\" by Zane Little Music
+https://opengameart.org/content/achilles
+
+All other stuff is made by me :)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="MainMenu" type="CanvasLayer" parent="TitleScreen"]
+
+[node name="CreditsSelector" type="Area2D" parent="TitleScreen/MainMenu"]
+position = Vector2(-224, -64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TitleScreen/MainMenu/CreditsSelector"]
+position = Vector2(240, 240)
+shape = SubResource("RectangleShape2D_6rg7a")
+
+[node name="Polygon2D" type="Polygon2D" parent="TitleScreen/MainMenu/CreditsSelector"]
+color = Color(1, 1, 1, 0.372549)
+polygon = PackedVector2Array(228, 228, 228, 252, 252, 252, 252, 228)
+
+[node name="TestProjectile" type="Area2D" parent="TitleScreen/MainMenu"]
 position = Vector2(128, 209)
 collision_layer = 0
 collision_mask = 2
 
-[node name="TestProjectile" type="Sprite2D" parent="TitleScreen/CanvasLayer/TestProjectile"]
+[node name="TestProjectile" type="Sprite2D" parent="TitleScreen/MainMenu/TestProjectile"]
 rotation = 1.5708
 texture = ExtResource("3_wcujf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TitleScreen/CanvasLayer/TestProjectile"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TitleScreen/MainMenu/TestProjectile"]
 shape = SubResource("CircleShape2D_4g25g")
 
-[node name="MainInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+[node name="MainInstruction" type="Label" parent="TitleScreen/MainMenu"]
 offset_left = 2.0
 offset_top = 3.0
 offset_right = 256.0
 offset_bottom = 104.0
 theme = ExtResource("2_de36d")
 text = "Move: WASD or Arrow Keys
-- Dodge Projectiles
+- Dodge Projectiles and Enemies
 - As you move, you draw a line
 - Draw a circle + hit Space to attack that area
 - Attack projectiles to send them back"
 autowrap_mode = 3
 
-[node name="StartInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+[node name="StartInstruction" type="Label" parent="TitleScreen/MainMenu"]
 offset_left = 141.0
-offset_top = 195.0
+offset_top = 187.0
 offset_right = 255.0
-offset_bottom = 229.0
+offset_bottom = 251.0
 theme = ExtResource("2_de36d")
-text = "Attack this projectile To Begin"
-autowrap_mode = 2
+text = "<- You
+<- Attack this projectile to start the game"
+autowrap_mode = 3
 
-[node name="HealthInstruction" type="Label" parent="TitleScreen/CanvasLayer"]
+[node name="CreditsInstruction" type="Label" parent="TitleScreen/MainMenu"]
+offset_left = 34.0
+offset_top = 168.0
+offset_right = 217.0
+offset_bottom = 184.0
+theme = ExtResource("2_de36d")
+text = "<- Stand here to see the credits"
+autowrap_mode = 3
+
+[node name="HealthInstruction" type="Label" parent="TitleScreen/MainMenu"]
 offset_left = 2.0
 offset_top = 220.0
 offset_right = 95.0
@@ -343,7 +389,9 @@ sound_effects = Array[ExtResource("20_m66bl")]([SubResource("Resource_enp0o"), S
 [connection signal="game_stopped" from="." to="GameTimer" method="_on_game_stop"]
 [connection signal="game_stopped" from="." to="EnemyOrchestrator" method="_on_game_stop"]
 [connection signal="tutorial_completed" from="TitleScreen" to="." method="_on_tutorial_completed"]
-[connection signal="area_entered" from="TitleScreen/CanvasLayer/TestProjectile" to="TitleScreen" method="_on_test_projectile_area_entered"]
+[connection signal="area_entered" from="TitleScreen/MainMenu/CreditsSelector" to="TitleScreen" method="_on_credits_area_entered"]
+[connection signal="area_exited" from="TitleScreen/MainMenu/CreditsSelector" to="TitleScreen" method="_on_credits_area_exited"]
+[connection signal="area_entered" from="TitleScreen/MainMenu/TestProjectile" to="TitleScreen" method="_on_test_projectile_area_entered"]
 [connection signal="timeout" from="EnemyOrchestrator/SpawnTimer" to="EnemyOrchestrator" method="_on_spawn_timer_timeout"]
 [connection signal="player_died" from="Player" to="." method="_on_player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
