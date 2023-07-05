@@ -61,11 +61,14 @@ func slow():
 
 
 func return_to_owner():	
+	
+	
 	if is_instance_valid(original_owner):
 		rotation = rotation + get_angle_to(original_owner.global_position)
 			
 	current_state = State.RETURNING
 	speed = return_speed
+
 		
 
 func can_damage(node: Node2D) -> bool:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=37 format=3 uid="uid://c7frq1vgh0545"]
+[gd_scene load_steps=38 format=3 uid="uid://c7frq1vgh0545"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hhm8g"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_wwex1"]
 [ext_resource type="PackedScene" uid="uid://ddc8j5fsi2rdc" path="res://HealthSystem.tscn" id="2_1fmnw"]
 [ext_resource type="Script" path="res://Scripts/AttackSystem.gd" id="2_2nppm"]
+[ext_resource type="AudioStream" uid="uid://c1ligi1e3rosi" path="res://Audio/achilles.mp3" id="2_7cta3"]
 [ext_resource type="Theme" uid="uid://b38ci0gydvl3p" path="res://Theme.tres" id="2_de36d"]
 [ext_resource type="Texture2D" uid="uid://dii53ypu8s4sr" path="res://Sprites/Heart.png" id="2_ebqge"]
 [ext_resource type="Script" path="res://Scripts/TitleScreen.gd" id="2_ihiqp"]
@@ -69,6 +70,10 @@ audio_clips = Array[AudioStream]([ExtResource("24_gsrfd")])
 [node name="Game" type="Node2D" node_paths=PackedStringArray("game_over_ui")]
 script = ExtResource("1_hhm8g")
 game_over_ui = NodePath("GameOverUI")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7cta3")
+bus = &"Music"
 
 [node name="Background" type="TileMap" parent="."]
 z_index = -5

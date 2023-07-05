@@ -37,16 +37,16 @@ func init(new_loop_owner: Node2D, points: PackedVector2Array):
 	tween.tween_callback(func():
 		for projectile in detected_projectiles:
 			
-			
-			projectile.return_to_owner()
-			
-			sound_requested.emit("attack2")
-			await get_tree().create_timer(shoot_delay).timeout
+			# This is a fix for if the projectile hit something on time time it
+			# entered the area and freed itself
+			if is_instance_valid(projectile):
+				projectile.return_to_owner()
+				sound_requested.emit("attack2")
+				await get_tree().create_timer(shoot_delay).timeout
 			
 		)
 
 func _on_area_entered(area: Area2D):
-	
 	
 	if area is Projectile:
 		
