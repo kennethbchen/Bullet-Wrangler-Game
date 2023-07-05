@@ -254,7 +254,7 @@ max_enemies = 3
 one_shot = true
 
 [node name="SpawnPoint" type="Marker2D" parent="EnemyOrchestrator"]
-position = Vector2(128, -56)
+position = Vector2(128, -12)
 
 [node name="PatrolPoints" type="Node" parent="EnemyOrchestrator"]
 
